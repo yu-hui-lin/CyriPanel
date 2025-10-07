@@ -25,13 +25,12 @@ pip install -r requirements.txt
 
 ---
 
-## Step 2: R Dependencies
-
-### Prerequisites
+### Step 2: R Dependencies
+#### Prerequisites
 - R version ≥4.0.0 (check with `R --version`)
 - Bioconductor package manager
 
-### Installation via R Console
+#### Installation via R Console
 ```R
 # Install BiocManager (if not already installed)
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -45,7 +44,7 @@ library(CNVPanelizer)
 packageVersion("CNVPanelizer")  # Should be ≥1.24.0
 ```
 
-### Alternative: Command Line Installation
+#### Alternative: Command Line Installation
 ```bash
 # Run R commands from shell
 Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
@@ -54,9 +53,8 @@ Rscript -e 'BiocManager::install("CNVPanelizer")'
 
 ---
 
-## Step 3: Verify Installation
-
-### Test Python Environment
+### Step 3: Verify Installation
+#### Test Python Environment
 ```python
 import numpy
 import scipy
@@ -68,7 +66,7 @@ print("All Python packages imported successfully!")
 print(f"pandas version: {pandas.__version__}")
 ```
 
-### Test R Environment
+#### Test R Environment
 ```bash
 # Test CNVPanelizer availability
 Rscript -e 'library(CNVPanelizer); cat("CNVPanelizer loaded successfully\n")'
@@ -76,10 +74,8 @@ Rscript -e 'library(CNVPanelizer); cat("CNVPanelizer loaded successfully\n")'
 
 ---
 
-## Step 4: Prepare Reference Panel
-
+### Step 4: Prepare Reference Panel
 CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
-
 1. **Collect 20+ reference BAM files** from samples with known diploid CYP2D6
 2. **Ensure all BAM files have index files** (.bai)
 3. **Organize in a directory structure:**
