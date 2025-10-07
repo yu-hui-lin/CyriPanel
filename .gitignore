@@ -1,0 +1,175 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+# ====================
+# CyriPanel-specific
+# ====================
+
+# R files
+.Rhistory
+.RData
+.Rproj.user
+*.Rproj
+.Rapp.history
+
+# Sequencing data files (DO NOT COMMIT LARGE FILES)
+*.bam
+*.bam.bai
+*.cram
+*.crai
+*.sam
+*.fasta
+*.fa
+*.fai
+*.fastq
+*.fq
+*.fastq.gz
+*.fq.gz
+
+# Reference files (users should provide their own)
+ref_dir/*.bam
+ref_dir/*.bam.bai
+ref_dir/*.cram
+ref_dir/*.crai
+
+# Output files
+results/
+output/
+cnv_panelizer_results/
+depth_calling/cnv_panelizer_results/
+*.json
+*.tsv
+*_CNV_exon_level_report.csv
+
+# Manifest files (contain local file paths)
+*.manifest
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Test data (if you add test suite)
+test_data/*.bam
+test_data/*.bam.bai
+test_data/output/
