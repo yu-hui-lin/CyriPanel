@@ -135,26 +135,61 @@ CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
 
 ---
 
-## Usage
-
+## Running the program
+This Python3 program can be run as follows:
 ```
 python3 star_caller.py \
-    --manifest sample01.manifest \
-    --genome 38 \
-    --prefix output_prefix \
-    --outDir results/ \
-    --threads 4
+    --manifest sample01.manifest \        # Path to manifest file
+    --genome 38 \                         # Reference genome (only GRCh38 supported)
+    --prefix sample01 \                   # Output file prefix
+    --outDir results/ \                   # Output directory
+    --threads 8                           # Number of threads
 ```
 
----
-
-## Input Files
-
+1. CyriPanel only supports **GRCh38**. If --genome input is not 38, CyriPanel will terminate with a warning.
+2. The manifest is a text file in which each line should list the absolute path to an input BAM file.
+```
+for bam in /BAM_dir/*.bam; do 
+    echo $bam > /manifest_dir/$(basename $bam .bam).manifest
+done
+```
 
 ---
 
 ## Output Format
+### Primary Output: TSV File
 
+**File**: `{prefix}_genotype_calls.tsv`
+
+**Columns:**
+- `Sample` - Sample identifier
+- `Genotype` - Final star allele call (e.g., *1/*2, *2x2/*4)
+- `Filter` - PASS or reason for failure
+- `Total_CN` - Total copy number (CYP2D6 + CYP2D7)
+- `D7_Spacer` - D7 spacer region copy number
+- `CNV_Config` - Structural configuration (e.g., cn2, star5, exon9hyb)
+- `Variants_Called` - List of identified variants
+- `Raw_Depth` - Mean read depth at CYP2D6
+
+**Example:**
+```tsv
+Sample	Genotype	Filter	Total_CN	D7_Spacer	CNV_Config	Variants_Called	Raw_Depth
+SAMPLE001	*1/*2	PASS	4	2	cn2	g.42126938C>T	1245
+SAMPLE002	*4/*4	PASS	4	2	cn2	g.42126938C>T,g.42128945C>T,g.42128945C>T	1567
+SAMPLE003	*2/*5	PASS	3	1	star5	g.42126938C>T	987
+SAMPLE004	*1/*1x2	PASS	5	3	cn3		2341
+```
+
+### Secondary Outputs
+
+**CNVPanelizer Reports** (per sample):
+- `{sample}_CNV_exon_level_report.csv` - Detailed CNV analysis
+- Contains MeanRatio, StdDev, and p-values for each region
+
+**Intermediate Files** (if `--clean` not used):
+- `{sample}_variant_calls.txt` - Raw variant calls
+- `{sample}_coverage_profile.txt` - Depth distribution
+- `{sample}_cnv_calls.txt` - Intermediate CNV calls
 
 
 
