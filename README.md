@@ -102,7 +102,28 @@ CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
 
 ---
 
-## Common Installation Issues
+## Usage
+
+
+---
+
+## Input Files
+
+---
+
+## Output Format
+
+
+
+
+
+
+
+
+
+---
+
+## Troubleshooting
 
 ### Issue 1: R Package Installation Fails
 BiocManager::install() fails with compilation errors
