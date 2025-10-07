@@ -104,7 +104,7 @@ CyriPanel requires a BED file defining the genomic regions captured by your pane
        └── CYP2D6_target_variant_homology_region_38.txt
    ```
 
-### Step 6: Prepare Reference Panel
+### Step 6: Prepare Diploid Samples
 CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
 1. **Collect reference BAM files from samples with known diploid CYP2D6.**
    **- 20+ samples recommended**
