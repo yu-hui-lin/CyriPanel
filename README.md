@@ -8,6 +8,21 @@ To overcome this limitation, we developed CyriPanel, an integrated pipeline that
 
 ---
 
+## Key Modifications
+### 1.  Copy Number Determination
+CyriPanel replaces WGS-dependent GMM with CNVPanelizer, which uses non-parametric bootstrap subsampling to calculate normalized read count ratios without requiring extensive reference cohorts, providing accurate CYP2D6 copy number estimates for targeted sequencing panels.
+
+### 2.  Algorithm Optimization
+- To accommodate targeted sequencing variability, the strand-bias filters are relaxed for known noisy variants, and position-specific read thresholds are implemented.
+-  A dual-validation system compares SNP-based and spacer-based copy number estimates to ensure high-confidence calls of structural variants.
+-  For ambiguous scenarios, the algorithm preferentially assigns CN=2 over CN=3 when confidence is below the threshold.
+-  To prevent false positives, CN=1 calling is enhanced with allele fraction validation and increased error parameters.
+
+### 3.  Fallback Mechanisms
+When initial estimations fail to produce high-confidence genotypes, the system automatically tests other copy number configurations, prioritized by proximity to initial estimates, ensuring robust genotyping in challenging cases.
+
+---
+
 ## Installation Guide
 CyriPanel requires both Python (≥3.6) and R (≥4.0) environments with specific packages.
 
