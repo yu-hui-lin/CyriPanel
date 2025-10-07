@@ -1,6 +1,7 @@
 # CyriPanel
 CYP2D6 genotyper for targeted panels with modified Cyrius and CNVPanelizer
 
+
 ## Installation Guide
 CyriPanel requires both Python (≥3.6) and R (≥4.0) environments with specific packages.
 
@@ -22,8 +23,6 @@ conda install numpy scipy pysam statsmodels pandas
 # or use pip within conda:
 pip install -r requirements.txt
 ```
-
----
 
 ### Step 2: R Dependencies
 #### Prerequisites
@@ -51,8 +50,6 @@ Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packag
 Rscript -e 'BiocManager::install("CNVPanelizer")'
 ```
 
----
-
 ### Step 3: Verify Installation
 #### Test Python Environment
 ```python
@@ -72,20 +69,22 @@ print(f"pandas version: {pandas.__version__}")
 Rscript -e 'library(CNVPanelizer); cat("CNVPanelizer loaded successfully\n")'
 ```
 
----
-
 ### Step 4: Prepare Reference Panel
 CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
-1. **Collect 20+ reference BAM files** from samples with known diploid CYP2D6
+1. **Collect reference BAM files** from samples with known diploid CYP2D6 (recommend to have around 20 samples)
 2. **Ensure all BAM files have index files** (.bai)
-3. **Organize in a directory structure:**
+3. **Place these BAM and BAI files in the ref_dir:**
    ```
-   reference_panel/
-   ├── sample01.bam
-   ├── sample01.bam.bai
-   ├── sample02.bam
-   ├── sample02.bam.bai
-   └── ...
+   CyriPanel/
+   ├── star_caller.py
+   ├── depth_calling
+   ├── caller
+   └── ref_dir/
+       ├── sample01.bam
+       ├── sample01.bam.bai
+       ├── sample02.bam
+       ├── sample02.bam.bai
+       └── ...
    ```
 
 ---
