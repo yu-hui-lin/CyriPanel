@@ -429,7 +429,7 @@ brew install libxml2
 ### Issue 2: pysam Installation Fails
 Error compiling pysam C extensions
 
-**Solutions:**
+Solutions:
 ```
 # On Ubuntu/Debian
 sudo apt-get install libbz2-dev liblzma-dev
@@ -442,9 +442,9 @@ pip install --upgrade pysam
 ```
 
 ### Issue 3: CNVPanelizer Not Found in Subprocess
-**Symptoms:** Python script can't find Rscript or CNVPanelizer
+Python script can't find Rscript or CNVPanelizer
 
-**Solution:**
+Solution:
 ```
 # Verify R is in PATH
 which Rscript
@@ -457,9 +457,9 @@ export R_LIBS_USER="$HOME/R/library"
 ```
 
 ### Issue 4: Personal Library Path Issues
-**Symptoms:** Permission denied when installing R packages
+Permission denied when installing R packages
 
-**Solution:** The run_CNVPanelizer.R script automatically handles this by setting:
+Solution: The run_CNVPanelizer.R script automatically handles this by setting:
 ```
 personal_lib_path <- file.path(Sys.getenv("HOME"), "R", "library")
 .libPaths(c(personal_lib_path, .libPaths()))
@@ -467,7 +467,7 @@ personal_lib_path <- file.path(Sys.getenv("HOME"), "R", "library")
 
 ---
 
-## Quick Start Verification Script
+### Quick Start Verification Script
 
 Save as `test_installation.sh`:
 ```
