@@ -157,40 +157,40 @@ done
 ---
 
 ## Output Format
-### Primary Output: TSV File
+### TSV File
 
-**File**: `{prefix}_genotype_calls.tsv`
+File: `{prefix}.tsv`
 
-**Columns:**
+Columns:
+- `Sample` - Sample identifier
+- `Genotype` - Final star allele call (e.g., *1/*2, *2x2/*4)
+- `Filter` - Filters on the genotype call
+  A genotype of "None" indicates a no-call.
+  There are currently four possible values for the Filter column:
+-PASS: a passing, confident call.
+-More_than_one_possible_genotype: In rare cases, Cyrius reports two possible genotypes for which it cannot distinguish one from the other. These are different sets of star alleles that result in the same set of variants that cannot be phased with short reads, e.g. *1/*46 and *43/*45. The two possible genotypes are reported together, separated by a semicolon.
+-Not_assigned_to_haplotypes: In a very small portion of samples with more than two copies of CYP2D6, Cyrius calls a set of star alleles but they can be assigned to haplotypes in more than one way. Cyrius reports the star alleles joined by underscores. For example, *1_*2_*68 is reported and the actual genotype could be *1+*68/*2, *2+*68/*1 or *1+*2/*68.
+-LowQ_high_CN: In rare cases, at high copy number (>=6 copies of CYP2D6), Cyrius uses less strict approximation in calling copy numbers to account for higher noise in depth and thus the genotype call could be lower confidence than usual.
+
+Example:
+```tsv
+Sample	   Genotype      Filter
+HG00544	   *1/*36+*10	   PASS
+```
+
+### JSON File
+File: `{prefix}.tsv`
+
+Columns:
 - `Sample` - Sample identifier
 - `Genotype` - Final star allele call (e.g., *1/*2, *2x2/*4)
 - `Filter` - PASS or reason for failure
-- `Total_CN` - Total copy number (CYP2D6 + CYP2D7)
-- `D7_Spacer` - D7 spacer region copy number
-- `CNV_Config` - Structural configuration (e.g., cn2, star5, exon9hyb)
-- `Variants_Called` - List of identified variants
-- `Raw_Depth` - Mean read depth at CYP2D6
 
-**Example:**
+Example:
 ```tsv
-Sample	Genotype	Filter	Total_CN	D7_Spacer	CNV_Config	Variants_Called	Raw_Depth
-SAMPLE001	*1/*2	PASS	4	2	cn2	g.42126938C>T	1245
-SAMPLE002	*4/*4	PASS	4	2	cn2	g.42126938C>T,g.42128945C>T,g.42128945C>T	1567
-SAMPLE003	*2/*5	PASS	3	1	star5	g.42126938C>T	987
-SAMPLE004	*1/*1x2	PASS	5	3	cn3		2341
+Sample	   Genotype      Filter
+HG00544	   *1/*36+*10	   PASS
 ```
-
-### Secondary Outputs
-
-**CNVPanelizer Reports** (per sample):
-- `{sample}_CNV_exon_level_report.csv` - Detailed CNV analysis
-- Contains MeanRatio, StdDev, and p-values for each region
-
-**Intermediate Files** (if `--clean` not used):
-- `{sample}_variant_calls.txt` - Raw variant calls
-- `{sample}_coverage_profile.txt` - Depth distribution
-- `{sample}_cnv_calls.txt` - Intermediate CNV calls
-
 
 
 
