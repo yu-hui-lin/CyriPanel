@@ -168,10 +168,10 @@ Columns:
   
   | Filter Value | Description |
   |-------------|-------------|
-  | `PASS` | A passing, confident call |
-  | `More_than_one_possible_genotype` | In rare cases, Cyrius reports two possible genotypes that cannot be distinguished from each other. These are different sets of star alleles that result in the same set of variants that cannot be phased with short reads (e.g., *1/*46 and *43/*45). The two possible genotypes are reported together, separated by a semicolon |
-  | `Not_assigned_to_haplotypes` | In a very small portion of samples with more than two copies of CYP2D6, Cyrius calls a set of star alleles but they can be assigned to haplotypes in more than one way. Cyrius reports the star alleles joined by underscores (e.g., *1_*2_*68 could be *1+*68/*2, *2+*68/*1, or *1+*2/*68) |
-  | `LowQ_high_CN` | In rare cases at high copy number (≥6 copies of CYP2D6), Cyrius uses less strict approximation in calling copy numbers to account for higher noise in depth. The genotype call could be lower confidence than usual |
+  | PASS | A passing, confident call |
+  | More_than_one_possible_genotype | In rare cases, Cyrius reports two possible genotypes that cannot be distinguished from each other. These are different sets of star alleles that result in the same set of variants that cannot be phased with short reads (e.g., *1/*46 and *43/*45). The two possible genotypes are reported together, separated by a semicolon |
+  | Not_assigned_to_haplotypes | In a very small portion of samples with more than two copies of CYP2D6, Cyrius calls a set of star alleles but they can be assigned to haplotypes in more than one way. Cyrius reports the star alleles joined by underscores (e.g., *1_*2_*68 could be *1+*68/*2, *2+*68/*1, or *1+*2/*68) |
+  | LowQ_high_CN | In rare cases at high copy number (≥6 copies of CYP2D6), Cyrius uses less strict approximation in calling copy numbers to account for higher noise in depth. The genotype call could be lower confidence than usual |
   
   **Note:** A genotype of "None" indicates a no-call.
 
@@ -207,9 +207,10 @@ Fields for each sample:
 - `Variant_raw_count` - Supporting reads for each variant
 
 Example:
+
+```json
 <details>
 <summary><b>Click to expand full field descriptions</b></summary>
-```json
 {
     "NA18747": {
         "Coverage_MAD": 0.0,
@@ -407,8 +408,9 @@ Example:
         }
     }
 }
-```
 </details>
+```
+
 
 ---
 
