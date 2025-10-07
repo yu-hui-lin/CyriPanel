@@ -75,25 +75,45 @@ pytest tests/ -v
 ```
 
 ### Step 5: Prepare BED file defining targeted panel regions 
-1. BED file in GRCh38 and 4-column format
-```
-chr22	42121996	42155994	CYP2D6/CYP2D7/CYP2D8atReverseStrand
-      chr22	42123192	42132032	CYP2D6plusREP6_hapcn2
-      chr22	42135344	42138124	REP7
-      chr22	42138124	42139676	D7spacer_hapcn1
-      chr22	42139676	42145745	CYP2D7
-```
-3. Place the 
+CyriPanel requires a BED file defining the genomic regions captured by your panel:
+1. Create a BED file in 0-based (standard BED format), **GRCh38 coordinates with 4-column format**.
+   Columns: chromosome, start, end, region name
+   Example BED file format (PGxProbe_region_hg38.bed):
+   ```
+   chr22	42121996	42155994	CYP2D6/CYP2D7/CYP2D8atReverseStrand
+   chr22	42123192	42132032	CYP2D6plusREP6_hapcn2
+   chr22	42135344	42138124	REP7
+   chr22	42138124	42139676	D7spacer_hapcn1
+   chr22	42139676	42145745	CYP2D7
+   ```
+   
+2. The BED file **must contain other genomic regions beyond CYP2D6 locus that are captured by your panel**. This is essential for CNVPanelizer normalization across samples.
+3. **Place the BED file in the /data directory**:
+   ```
+   CyriPanel/
+   ├── star_caller.py
+   ├── depth_calling/
+   ├── caller/
+   ├── ref_dir
+   └── data/
+       ├── PGxProbe_region_hg38.bed
+       ├── star_table.txt
+       ├── CYP2D6_SNP_38.txt
+       ├── CYP2D6_haplotype_38.txt
+       ├── CYP2D6_target_variant_38.txt
+       └── CYP2D6_target_variant_homology_region_38.txt
+   ```
 
 ### Step 6: Prepare Reference Panel
 CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
-1. **Collect reference BAM files from samples with known diploid CYP2D6**
+1. **Collect reference BAM files from samples with known diploid CYP2D6.**
    **- 20+ samples recommended**
    **- Same sequencing platform and capture kit as test samples**
-3. **Ensure all BAM files have index files** (.bai)
-4. **Place these BAM and BAI files in the ref_dir:**
-  ```
+3. **Ensure all BAM files have index files(.bai).** 
+4. **Place these BAM and BAI files in the /ref_dir directory:**
+   ```
    CyriPanel/
+   ├── data/
    ├── star_caller.py
    ├── depth_calling/
    ├── caller/
@@ -103,14 +123,14 @@ CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
        ├── sample02.bam
        ├── sample02.bam.bai
        └── ...
-  ```
-```
-# Organize reference BAMs (20+ samples with known CN=2 at CYP2D6)
-mkdir reference_panel
-# Copy your reference BAM files here
-cp /path/to/reference*.bam reference_panel/
-cp /path/to/reference*.bam.bai reference_panel/
-```
+   ```
+   ```
+   # Organize reference BAMs (20+ samples with known CN=2 at CYP2D6)
+   mkdir reference_panel
+   # Copy your reference BAM files here
+   cp /path/to/reference*.bam reference_panel/
+   cp /path/to/reference*.bam.bai reference_panel/
+   ```
 
 
 ---
