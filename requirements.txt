@@ -1,0 +1,7 @@
+Python >=3.8
+R >=4.0
+numpy >=1.16
+scipy >=1.2
+pysam >=0.15.3
+statsmodels >=0.9
+pandas >=1.0.0
