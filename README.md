@@ -27,13 +27,13 @@ When initial estimations fail to produce high-confidence genotypes, the system a
 CyriPanel requires both Python (≥3.6) and R (≥4.0) environments with specific packages.
 
 ### Step 1: Clone Repository
-```bash
+```
 git clone https://github.com/yourusername/CyriPanel.git
 cd CyriPanel
 ```
 
 ### Step 2: Install Python Dependencies
-```bash
+```
 # Using pip
 pip install -r requirements.txt
 
@@ -74,13 +74,25 @@ Rscript -e "library(CNVPanelizer); cat('✓ R packages OK\n')"
 pytest tests/ -v
 ```
 
-### Step 5: Prepare Reference Panel
+### Step 5: Prepare BED file defining targeted panel regions 
+1. BED file in GRCh38 and 4-column format
+```
+chr22	42121996	42155994	CYP2D6/CYP2D7/CYP2D8atReverseStrand
+      chr22	42123192	42132032	CYP2D6plusREP6_hapcn2
+      chr22	42135344	42138124	REP7
+      chr22	42138124	42139676	D7spacer_hapcn1
+      chr22	42139676	42145745	CYP2D7
+```
+3. Place the 
+
+### Step 6: Prepare Reference Panel
 CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
 1. **Collect reference BAM files from samples with known diploid CYP2D6**
    **- 20+ samples recommended**
    **- Same sequencing platform and capture kit as test samples**
 3. **Ensure all BAM files have index files** (.bai)
 4. **Place these BAM and BAI files in the ref_dir:**
+  ```
    CyriPanel/
    ├── star_caller.py
    ├── depth_calling/
@@ -91,23 +103,33 @@ CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
        ├── sample02.bam
        ├── sample02.bam.bai
        └── ...
-   ```
-   # Organize reference BAMs (20+ samples with known CN=2 at CYP2D6)
-    mkdir reference_panel
-    # Copy your reference BAM files here
-    cp /path/to/reference*.bam reference_panel/
-    cp /path/to/reference*.bam.bai reference_panel/
-   ```
+  ```
+```
+# Organize reference BAMs (20+ samples with known CN=2 at CYP2D6)
+mkdir reference_panel
+# Copy your reference BAM files here
+cp /path/to/reference*.bam reference_panel/
+cp /path/to/reference*.bam.bai reference_panel/
+```
 
 
 ---
 
 ## Usage
 
+```
+python3 star_caller.py \
+    --manifest sample01.manifest \
+    --genome 38 \
+    --prefix output_prefix \
+    --outDir results/ \
+    --threads 4
+```
 
 ---
 
 ## Input Files
+
 
 ---
 
@@ -129,7 +151,7 @@ CyriPanel requires a reference panel of diploid samples (CN=2 at CYP2D6):
 BiocManager::install() fails with compilation errors
 
 Solutions:
-```bash
+```
 # On Ubuntu/Debian
 sudo apt-get install build-essential r-base-dev libxml2-dev libcurl4-openssl-dev libssl-dev
 
@@ -142,7 +164,7 @@ brew install libxml2
 Error compiling pysam C extensions
 
 **Solutions:**
-```bash
+```
 # On Ubuntu/Debian
 sudo apt-get install libbz2-dev liblzma-dev
 
@@ -157,7 +179,7 @@ pip install --upgrade pysam
 **Symptoms:** Python script can't find Rscript or CNVPanelizer
 
 **Solution:**
-```bash
+```
 # Verify R is in PATH
 which Rscript
 R --version
@@ -172,7 +194,7 @@ export R_LIBS_USER="$HOME/R/library"
 **Symptoms:** Permission denied when installing R packages
 
 **Solution:** The run_CNVPanelizer.R script automatically handles this by setting:
-```R
+```
 personal_lib_path <- file.path(Sys.getenv("HOME"), "R", "library")
 .libPaths(c(personal_lib_path, .libPaths()))
 ```
@@ -182,7 +204,7 @@ personal_lib_path <- file.path(Sys.getenv("HOME"), "R", "library")
 ## Quick Start Verification Script
 
 Save as `test_installation.sh`:
-```bash
+```
 #!/bin/bash
 echo "Testing CyriPanel Installation..."
 echo ""
