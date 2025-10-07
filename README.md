@@ -207,6 +207,8 @@ Fields for each sample:
 - `Variant_raw_count` - Supporting reads for each variant
 
 Example:
+<details>
+<summary><b>Click to expand full field descriptions</b></summary>
 ```json
 {
     "NA18747": {
@@ -406,6 +408,7 @@ Example:
     }
 }
 ```
+</details>
 
 ---
 
