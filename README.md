@@ -1,5 +1,5 @@
 # CyriPanel
-CYP2D6 genotyper for targeted panels with modified Cyrius and CNVPanelizer
+An accurate CYP2D6 genotyper for laboratory-developed targeted panels.
 
 ## Introduction
 Cyrius, an open-source tool by Illumina, excels at CYP2D6 genotyping from whole-genome sequencing (WGS) data. **However, its reliance on a Gaussian Mixture Model (GMM) trained on WGS coverage patterns from 2,504 samples in the 1000 Genomes Project creates significant limitations for laboratory-developed targeted sequencing panels, whose coverage patterns differ substantially from WGS data.**
