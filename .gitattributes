@@ -1,0 +1,49 @@
+# Auto-detect text files and perform LF normalization
+* text=auto
+
+# Force LF line endings for source files
+*.py text eol=lf
+*.R text eol=lf
+*.sh text eol=lf
+*.bash text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.tsv text eol=lf
+*.csv text eol=lf
+*.bed text eol=lf
+*.manifest text eol=lf
+
+# Ensure Windows batch files retain CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.bam binary
+*.bam.bai binary
+*.cram binary
+*.crai binary
+*.fasta binary
+*.fa binary
+*.fai binary
+*.fastq.gz binary
+*.fq.gz binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.so binary
+
+# Diff settings for specific file types
+*.py diff=python
+*.R diff=r
+*.md diff=markdown
+
+# Mark large files (requires Git LFS if used)
+# Uncomment and configure if using Git LFS
+# *.bam filter=lfs diff=lfs merge=lfs -text
+# *.cram filter=lfs diff=lfs merge=lfs -text
