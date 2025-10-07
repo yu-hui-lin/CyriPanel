@@ -1,6 +1,12 @@
 # CyriPanel
 CYP2D6 genotyper for targeted panels with modified Cyrius and CNVPanelizer
 
+## Introduction
+Cyrius, an open-source tool by Illumina, excels at CYP2D6 genotyping from whole-genome sequencing (WGS) data. However, its reliance on a Gaussian Mixture Model (GMM) trained on WGS coverage patterns from 2,504 samples in the 1000 Genomes Project creates significant limitations for laboratory-developed targeted sequencing panels, whose coverage patterns differ substantially from WGS data.
+
+To overcome this limitation, we developed CyriPanel, an integrated pipeline that combines CNVPanelizer with a modified Cyrius framework. CyriPanel replaces the WGS-dependent GMM with CNVPanelizer's bootstrap-based approach, generating synthetic reference sets directly from panel data. We further optimized variant calling algorithms for high-depth sequencing noise and implemented fallback mechanisms to resolve ambiguous CNV or SV calls. CyriPanel enables accurate CYP2D6 genotyping from targeted sequencing without requiring extensive reference cohorts, making comprehensive pharmacogenomic testing more accessible for clinical laboratories using custom panels.
+
+---
 
 ## Installation Guide
 CyriPanel requires both Python (≥3.6) and R (≥4.0) environments with specific packages.
