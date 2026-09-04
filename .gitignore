@@ -26,8 +26,6 @@ wheels/
 MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -102,3 +100,89 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# ====================
+# CyriPanel-specific
+# ====================
+
+# R files
+.Rhistory
+.RData
+.Rproj.user
+*.Rproj
+.Rapp.history
+
+# Sequencing data files (DO NOT COMMIT LARGE FILES)
+*.bam
+*.bam.bai
+*.cram
+*.crai
+*.sam
+*.fasta
+*.fa
+*.fai
+*.fastq
+*.fq
+*.fastq.gz
+*.fq.gz
+
+# Reference files (users should provide their own)
+ref_dir/*.bam
+ref_dir/*.bam.bai
+ref_dir/*.cram
+ref_dir/*.crai
+
+# Output files
+results/
+output/
+cnv_panelizer_results/
+depth_calling/cnv_panelizer_results/
+*.json
+*.tsv
+*_CNV_exon_level_report.csv
+
+# Manifest files (contain local file paths)
+*.manifest
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Test data (if you add test suite)
+test_data/*.bam
+test_data/*.bam.bai
+test_data/output/
+
+# Local backups and scratch
+*.backup_*
+*.bak_*
+*.original_*
+__pycache__/
+logs/
+
+# Large inputs — documented in README, not shipped
+ref_dir/*.bam
+ref_dir/*.bam.bai
+test_data/*.bam
+test_data/*.bam.bai

@@ -1,37 +1,23 @@
 #!/usr/bin/env python3
-#
-# Cyrius: CYP2D6 genotyper
-# Copyright (c) 2019-2020 Illumina, Inc.
-#
-# Author: Xiao Chen <xchen2@illumina.com>
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# CyriPanel — modified from Cyrius (Copyright (c) 2019-2020 Illumina, Inc.),
+# GPL-3.0. Rewritten for the 4-column BED parser: the original test used a
+# 6-column Cyrius region file and asserted on region-type keys from its fifth
+# column, which CyriPanel no longer produces.
 
-
-import sys
 import os
-import pytest
-
 from ..utilities import parse_region_file
 
-test_data_dir = os.path.join(os.path.dirname(__file__), "test_data")
+data_dir = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, "data")
 
 
 class TestUtilities(object):
-    def test_parse_reigon_file(self):
-        region_file = os.path.join(test_data_dir, "SMN_region_19_short.bed")
-        region_dic = parse_region_file(region_file)
-        assert len(region_dic["norm"]) == 500
-        assert len(region_dic["exon16"]) == 2
-        assert len(region_dic["exon78"]) == 2
+    def test_parse_region_file(self):
+        """The panel BED must parse without raising: star_caller calls this at
+        startup, so a failure here aborts the run."""
+        region_dic = parse_region_file(
+            os.path.join(data_dir, "PGxProbe_region_hg38.bed"), 38
+        )
+        assert list(region_dic.keys()) == ["target"]
+        assert len(region_dic["target"]) == 784
+        (nchr, start, end, name), gc = region_dic["target"][0]
+        assert nchr.startswith("chr") and end > start and name and gc == "0.0"

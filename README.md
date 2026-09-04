@@ -1,61 +1,128 @@
-# Cyrius: WGS-based CYP2D6 genotyper
-Cyrius is a tool to genotype CYP2D6 from a whole-genome sequencing (WGS) BAM file. Cyrius uses a novel method to solve the problems caused by the high sequence similarity with the pseudogene paralog CYP2D7 and thus is able to detect all star alleles, particularly those that contain structural variants, accurately. Please refer to our [paper](https://www.nature.com/articles/s41397-020-00205-5) for details about the method.   
+# CyriPanel - CYP2D6 Genotyper for Targeted Sequencing Panels
 
-Cyrius has been integrated into [Illumina DRAGEN Bio-IT Platform since v3.7](https://support.illumina.com/content/dam/illumina-support/help/Illumina_DRAGEN_Bio_IT_Platform_v3_7_1000000141465/Content/SW/Informatics/Dragen/CYP2D6_Caller_fDG.htm).
+##  國網位址 (Location)
 
-## Running the program
-
-This Python3 program can be run as follows:
 ```bash
-python3 star_caller.py --manifest MANIFEST_FILE \
-                       --genome [19/37/38] \
-                       --prefix OUTPUT_FILE_PREFIX \
-                       --outDir OUTPUT_DIRECTORY \
-                       --threads NUMBER_THREADS
+/staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/CyriPanel
 ```
-The manifest is a text file in which each line should list the absolute path to an input BAM/CRAM file.
-For CRAM input, it’s suggested to provide the path to the reference fasta file with `--reference` in the command.  
 
-Cyrius can now be installed with `pip install cyrius` and run with `cyrius -h`, with the same parameters as listed above.
+## 快速開始 (Quick Start)
 
-## Interpreting the output  
+### 0. 放置 5-20 個已知為 diploid、無 CNV/SV 的檢體至
+```bash
+/staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel/ref_dir
+```
 
-The program produces a .tsv file in the directory specified by --outDir.  
-The fields are explained below:  
+-  **！！！ BAM 檔需由 Illumina Dragen 作為 aligner 生成 ！！！**
+- 須為與待檢檢體相同 wet lab 流程產出
+- 每個 BAM 檔需有對應的 .bai 索引檔
 
-| Fields in tsv     | Explanation                                                    |
-|:------------------|:---------------------------------------------------------------|
-| Sample            | Sample name                                                    |
-| Genotype          | Genotype call                                                  |   
-| Filter            | Filters on the genotype call                                   |   
+預設為 NA21102, HG01940, HG00639, HG00350, HG00232 五個檢體
 
-A genotype of "None" indicates a no-call.  
-There are currently four possible values for the Filter column:  
--`PASS`: a passing, confident call.   
--`More_than_one_possible_genotype`: In rare cases, Cyrius reports two possible genotypes for which it cannot distinguish one from the other. These are different sets of star alleles that result in the same set of variants that cannot be phased with short reads, e.g. \*1/\*46 and \*43/\*45. The two possible genotypes are reported together, separated by a semicolon.   
--`Not_assigned_to_haplotypes`: In a very small portion of samples with more than two copies of CYP2D6, Cyrius calls a set of star alleles but they can be assigned to haplotypes in more than one way. Cyrius reports the star alleles joined by underscores. For example, \*1_\*2_\*68 is reported and the actual genotype could be \*1+\*68/\*2, \*2+\*68/\*1 or \*1+\*2/\*68.  
--`LowQ_high_CN`: In rare cases, at high copy number (>=6 copies of CYP2D6), Cyrius uses less strict approximation in calling copy numbers to account for higher noise in depth and thus the genotype call could be lower confidence than usual.     
-  
-A .json file is also produced that contains more information about each sample.  
-  
-| Fields in json    | Explanation                                                    |
-|:------------------|:---------------------------------------------------------------|
-| Coverage_MAD      | Median absolute deviation of depth, measure of sample quality  |
-| Median_depth      | Sample median depth                                            |
-| Total_CN          | Total copy number of CYP2D6+CYP2D7                             |
-| Total_CN_raw      | Raw normalized depth of CYP2D6+CYP2D7                          |
-| Spacer_CN         | Copy number of CYP2D7 spacer region                            |
-| Spacer_CN_raw     | Raw normalized depth of CYP2D7 spacer region                   |
-| Variants_called   | Targeted variants called in CYP2D6                             |
-| CNV_group         | An identifier for the sample's CNV/fusion status               |
-| Variant_raw_count | Supporting reads for each variant                              |
-| Raw_star_allele   | Raw star allele call                                           |
-| d67_snp_call      | CYP2D6 copy number call at CYP2D6/7 differentiating sites      |
-| d67_snp_raw       | Raw CYP2D6 copy number at CYP2D6/7 differentiating sites       |
+### 1. 啟動環境
 
-## Troubleshooting  
+```bash
+# 載入miniconda
+module load biology
+module load miniconda3
 
-Common causes for Cyrius to produce no-calls are:  
--Low sequencing depth. We suggest a sequencing depth of 30x, which is the standard practice recommended by clinical genome sequencing.  
--The depth of the CYP2D6/CYP2D7 region is much lower than the rest of the genome, most likely because reads are aligned to alternative contigs. If your reference genome includes alternative contigs, we suggest alt-aware alignment so that alignments to the primary assembly take precedence over alternative contigs.  
--The majority of reads in CYP2D6/CYP2D7 region have a mapping quality of zero. This is probably due to some post-processing tools like bwa-postalt that modifies the mapQ in the BAM. We recommend using the BAM file before such post-processing steps as input to Cyrius.  
+# 載入並啟動 CyriPanel 環境
+cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
+source activate_cyripanel.sh
+```
+
+### 2. 驗證安裝 (Validation Test)
+
+執行測試樣本 HG02129 以確認安裝正確：
+
+```bash
+cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
+bash run_test_HG02129.sh
+```
+
+預期結果：
+
+```bash
+[INFO] Called Genotype: *1/*36+*10
+[INFO] Filter Status: PASS
+[INFO] Expected Genotype: *1/*36+*10
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   ✓ TEST PASSED - EXACT MATCH                               ║
+║                                                              ║
+║   CyriPanel is correctly installed and configured!          ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+### 3. 建立 .manifest 
+
+假設要分析 /sample_directory 資料夾內所有 .bam
+
+```bash
+# 自動列出所有 BAM 檔案
+cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
+ls /sample_directory/*.bam > manifests/my_samples.manifest
+
+# 檢查內容
+cat manifests/my_samples.manifest
+```
+
+### 4. 執行批次分析 
+
+##### 方式 A：直接在登入節點執行（小量批次樣本）
+
+```bash
+bash run_cyripanel.sh --manifest manifests/my_samples.manifest batch_name
+```
+
+batch_name: 就是一個輸出檔案的前綴名稱，你可以自己取名，例如：PG_batch20260129
+輸出檔案會變成：results/PG_batch20260129_cyp2d6.tsv
+
+##### 方式 B：提交 SLURM 工作 (把工作提交到計算節點，不會佔用登入節點資源)
+
+```bash
+sbatch submit_cyripanel.slurm manifests/my_samples.manifest batch_name
+```
+
+batch_name: 就是一個輸出檔案的前綴名稱，你可以自己取名，例如：PG_batch20260129
+輸出檔案會變成：results/PG_batch20260129_cyp2d6.tsv
+
+## 輸出檔案 (Output Files)
+
+| 檔案              | 說明                             |
+| --------------- | ------------------------------ |
+| `{prefix}.tsv`  | 簡化結果（Sample, Genotype, Filter） |
+| `{prefix}.json` | 完整結果（包含 CNV 資訊、變異位點等）          |
+
+### TSV 輸出範例
+
+```
+Sample      Genotype        Filter
+HG02129     *1/*10+*36      PASS
+HG00436     *2/*41          PASS
+```
+
+## 目錄結構 (Directory Structure)
+
+```
+CyriPanel/
+├── star_caller.py           # 主程式
+├── run_cyripanel.sh         # 執行腳本
+├── run_test_HG02129.sh      # 測試腳本
+├── activate_cyripanel.sh    # 環境啟動腳本
+├── submit_cyripanel.slurm   # SLURM 工作腳本
+├── caller/                  # Star allele 分析模組
+├── depth_calling/           # CNV 分析模組
+├── data/                    # 參考資料檔
+├── ref_dir/                 # CNVPanelizer 參考樣本 (20 個 diploid BAMs)
+├── manifests/               # .manifest files
+├── test_data/               # 測試樣本
+├── results/                 # 輸出結果
+└── logs/                    # 日誌檔案
+```
+
+---
+Copyright © Yu-Hui Lin (林育慧) yhlin.md05@nycu.edu.tw
+Github: https://github.com/yu-hui-lin/CyriPanel/tree/main
+*CyriPanel is licensed under GPL-3.0. See LICENSE file for details.*
