@@ -1,22 +1,30 @@
 #!/usr/bin/env python3
 #
-# Cyrius: CYP2D6 genotyper
-# Copyright (c) 2019-2020 Illumina, Inc.
+# CyriPanel: CYP2D6 genotyper for targeted sequencing panels
+# Modified and integrated by Yu-Hui Lin <yhlin.md05@nycu.edu.tw>
+# Original Cyrius Copyright (c) 2019-2020 Illumina, Inc.
+# Original Author: Xiao Chen <xchen2@illumina.com>
+# BCyrius (updated CYP2D6 star alleles) Copyright (c) 2024 Andreas Halman
 #
-# Author: Xiao Chen <xchen2@illumina.com>
+# Modifications include:
+# - Integration of CNVPanelizer to override Gaussian Mixture Model (GMM) CNV calculations.
+# - Optimization specifically tailored for targeted sequencing panels.
+# - Added fallback mechanisms to improve robustness against the noisier read depths of targeted sequencing data.
+# - Updated CYP2D6 star allele definitions based on BCyrius.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
-# at your option) any later version.
+# (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 
 import os
 from collections import namedtuple
@@ -28,11 +36,13 @@ CNVTAG_TO_GENOTYPE = {
     "star13intron1_star13intron1": "*13/*13",
     "star5_star5_star68": "*5/*68",
 }
-# These suballeles below are not converted to main alleles as
-# they reflect SVs.
-KEPT_SUBALLELES = ["*4.013"]
-# Rare alleles lead to nonunique diplotypes. Select against these
-# when there are nonunique calls.
+
+# --- MODIFIED: Empty KEPT_SUBALLELES list to report *4.013 as *4 (main allele) rather than maintaining suballele distinction.
+# BCyrius includes 4.013 in this list to report it separately from *4, but CyriPanel simplifies reporting. ---
+KEPT_SUBALLELES = []
+# --- END OF MODIFICATION ---
+
+# Rare alleles lead to nonunique diplotypes. Select against these when there are nonunique calls.
 RARE_ALLELES = ["*34", "*39", "*4.009", "*139"]
 raw_star = namedtuple("raw_star", "call_info candidate star_call")
 
@@ -61,6 +71,43 @@ def convert_to_main_allele(list_of_star):
                 converted_star.append(star)
         converted_list.add("_".join(sorted(converted_star)))
     return list(converted_list)
+
+
+# --- MODIFIED: Add diagnostic variant counting function for CN3 disambiguation.
+# In targeted sequencing with CN=3, multiple star allele combinations can produce similar overall variant counts.
+# This function examines copy numbers of specific diagnostic variants (42129770 for *17, 42129130 for *2, etc.)
+# to determine the correct combination, addressing ambiguity that standard matching cannot resolve. ---
+def check_diagnostic_variants_cn3(var_observed):
+    """
+    For CN=3 cases, check diagnostic variants to determine the correct star allele combination.
+    Returns the preferred star combination if a clear pattern is found, None otherwise.
+    """
+    # Count diagnostic variants
+    count_42129770 = var_observed.count("g.42129770G>A")  # Unique to *17
+    count_42129130 = var_observed.count("g.42129130C>G")  # Unique to *2
+    count_42127941 = var_observed.count("g.42127941G>A")  # Shared by *17 and *2
+    
+    # Check for *17/*2+*2 pattern (1 copy of *17, 2 copies of *2)
+    if count_42129770 == 1 and count_42129130 == 2 and count_42127941 == 3:
+        return "*17_*2_*2"
+    
+    # Check for *17+*17/*2 pattern (2 copies of *17, 1 copy of *2)
+    if count_42129770 == 2 and count_42129130 == 1 and count_42127941 == 3:
+        return "*17_*17_*2"
+    
+    # Check for other common patterns with *41
+    count_42129809 = var_observed.count("g.42129809T>C")  # Unique to *41
+    
+    # Check for *2+*2/*41 pattern
+    if count_42129130 == 2 and count_42129809 == 1:
+        return "*2_*2_*41"
+    
+    # Check for *2/*41+*41 pattern
+    if count_42129130 == 1 and count_42129809 == 2:
+        return "*2_*41_*41"
+    
+    return None
+# --- END OF MODIFICATION ---
 
 
 def get_star(var_observed, dic):
@@ -500,9 +547,26 @@ def match_star(
     dic = get_dic(cnvcall, star_combinations)
     if dic is None:
         return star_call(None, None, None, None)
-    # print(dic)
 
     var_observed = update_variants(var_observed, cnvcall, exon9)
+
+    # --- MODIFIED: Apply diagnostic variant-based disambiguation for CN3 cases before standard matching.
+    # Standard variant table matching for CN3 often produces ambiguous results (*17/*2+*2 vs *17+*17/*2 vs *2+*2/*41, etc.)
+    # because overall variant counts are similar. By checking diagnostic variant copy numbers first,
+    # we can directly identify the correct combination and bypass ambiguous table matching for improved accuracy in targeted sequencing. ---
+    if cnvcall == "cn3":
+        preferred_combination = check_diagnostic_variants_cn3(var_observed)
+        if preferred_combination:
+            # Directly create and return the correct result
+            final_call = [preferred_combination]
+            final_call_clean = get_final_call_clean(final_call, cnvcall, spacer_cn)
+            return star_call(
+                "unique_match", 
+                " ".join(var_observed), 
+                [preferred_combination], 
+                final_call_clean
+            )
+    # --- END OF MODIFICATION ---
 
     if "star68" not in cnvcall:
         matchtag = get_star(var_observed, dic)

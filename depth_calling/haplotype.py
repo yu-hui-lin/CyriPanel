@@ -1,22 +1,29 @@
 #!/usr/bin/env python3
 #
-# Cyrius: CYP2D6 genotyper
-# Copyright (c) 2019-2020 Illumina, Inc.
+# CyriPanel: CYP2D6 genotyper for targeted sequencing panels
+# Modified and integrated by Yu-Hui Lin <yhlin.md05@nycu.edu.tw>
+# Original Cyrius Copyright (c) 2019-2020 Illumina, Inc.
+# Original Author: Xiao Chen <xchen2@illumina.com>
+# BCyrius (updated CYP2D6 star alleles) Copyright (c) 2024 Andreas Halman
 #
-# Author: Xiao Chen <xchen2@illumina.com>
+# Modifications include:
+# - Integration of CNVPanelizer to override Gaussian Mixture Model (GMM) CNV calculations.
+# - Optimization specifically tailored for targeted sequencing panels.
+# - Added fallback mechanisms to improve robustness against the noisier read depths of targeted sequencing data.
+# - Updated CYP2D6 star allele definitions based on BCyrius.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
-# at your option) any later version.
+# (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 from .snp_count import passing_read
