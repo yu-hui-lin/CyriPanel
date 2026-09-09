@@ -104,12 +104,15 @@ tryCatch({
   message(paste("Extracted", length(uniqueAmpliconNames_for_functions), "unique identifiers to be used for amplicons by CNVPanelizer."))
   
   # --- STEP 3: Load reference and sample BAM files. ---
-  # Reference panel should contain enough diploid samples for robust normalization (20+ samples recommended).
-  # Fewer references may reduce CNV detection accuracy.
+  # The published evaluation found reference panels of 5, 10 and 20 samples
+  # equivalent for genotype concordance, and the clinical deployment runs with
+  # five. Warn only below that floor; the previous check demanded exactly 20.
+  # Fewer than five may reduce copy-number stability.
   referenceFilenames <- list.files(path = referenceDirectory, pattern = "\\.bam$", full.names = TRUE)
-  expectedReferenceCount <- 20
-  if (length(referenceFilenames) != expectedReferenceCount) {
-    warning(paste("Expected", expectedReferenceCount, "reference BAM files, but found", length(referenceFilenames), "in", referenceDirectory))
+  minimumReferenceCount <- 5
+  if (length(referenceFilenames) < minimumReferenceCount) {
+    warning(paste("Found only", length(referenceFilenames), "reference BAM files in",
+                  referenceDirectory, "- at least", minimumReferenceCount, "are recommended."))
   } else {
     message(paste("Found", length(referenceFilenames), "reference BAM files."))
   }

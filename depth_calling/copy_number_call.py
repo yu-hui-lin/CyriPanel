@@ -57,7 +57,7 @@ def call_reg1_cn(full_cn, count_reg1, count_reg2, min_read=0):
     # --- MODIFIED: Enhanced CN=1 calling logic for targeted sequencing with allele fraction validation.
     # Original: Simple check "if full_cn == 1 and count_reg1 > min_read: return [1]"
     # Problem: In targeted panels with variable coverage, low-level noise can be miscalled as variants.
-    # Solution: (1) Require ≥20 reads for fraction analysis, (2) Detect heterozygosity conflict (0.25-0.75 fraction contradicts CN=1 assumption -> return None), 
+    # Solution: (1) Require >20 reads for fraction analysis, (2) Detect heterozygosity conflict (0.40-0.60 fraction contradicts CN=1 assumption -> return None),
     # (3) Require ≥85% or ≤15% fraction for confident calls, preventing false positives from noise while maintaining sensitivity for true variants. ---
     total_reads_at_site = count_reg1 + count_reg2
 

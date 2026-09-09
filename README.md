@@ -191,7 +191,7 @@ publication; the evaluation framework will be deposited alongside it.
 
 - **`*1/*32` versus `*27/*41`** cannot be distinguished. Separating them requires phasing
   g.42126938C>T against g.42126611C>G, 327 bp apart — beyond read length. Paired-end
-  fragments spanning both positions do exist (27–38 per sample in our data), so read-pair
+  fragments covering both positions are plentiful (median 120 per sample, range 6-434 across the 116 evaluated samples; none had fewer than six), so read-pair
   phasing is feasible, but it is not implemented and no `*32`-carrying sample was available
   to validate it against.
 - **`*15.003`** is not resolved as a sub-allele. `*15` itself is called through the standard
