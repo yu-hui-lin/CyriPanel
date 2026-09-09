@@ -186,3 +186,44 @@ ref_dir/*.bam
 ref_dir/*.bam.bai
 test_data/*.bam
 test_data/*.bam.bai
+
+# --- CyriPanel benchmark hygiene -------------------------------------------
+# Editor and OS noise
+.DS_Store
+__pycache__/
+*.pyc
+
+# Working copies. The benchmark directory accumulated 13 of these; none belong
+# in the repository and none describe the version that produced the results.
+*.bak
+*.bak_*
+*.backup
+*.backup_*
+*.original_*
+
+# Run logs. Useful locally, meaningless to anyone else, and they leak paths.
+*.log
+*.err
+*.out
+
+# Documents. A signed authorship consent form was sitting in benchmark/ and
+# would have been published by a careless `git add benchmark/`.
+*.docx
+*.doc
+*.pdf
+
+# Zero-byte artefacts of mistyped commands
+benchmark/done
+benchmark/echo
+benchmark/ls
+
+# Per-iteration outputs and aligned reads: too large, and regenerable
+*.bam
+*.bai
+*.cram
+iter_*/
+
+# The benchmark's published intermediate results are deliberately tracked, so the
+# manuscript's tables can be regenerated without re-running anything. This
+# overrides the blanket *.tsv rule above.
+!benchmark/published_results/*.tsv
