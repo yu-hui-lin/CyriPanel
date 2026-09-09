@@ -1,6 +1,17 @@
-Python >=3.8
-numpy >=1.16
-scipy >=1.2
-pysam >=0.15.3
-statsmodels >=0.9
-pandas >=1.0.0
+# Runtime dependencies for CyriPanel.
+#
+# Upper bounds are deliberate: the caller was written against the NumPy 1.x and
+# pandas 1.x APIs and is not tested against NumPy 2 or pandas 2/3. For the exact
+# versions that produced the published results, see requirements-validated.txt.
+#
+# Python 3.6.8 is the validated interpreter. Later 3.x versions are expected to
+# work but have not been tested.
+
+numpy>=1.16,<2.0
+scipy>=1.2,<2.0
+pysam>=0.15.3
+statsmodels>=0.9,<1.0
+pandas>=1.0.0,<2.0
+
+# CyriPanel also requires an R installation with CNVPanelizer; see
+# depth_calling/run_CNVPanelizer.R and requirements-validated.txt.

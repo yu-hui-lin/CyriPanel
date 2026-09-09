@@ -22,7 +22,7 @@ CYP2D6–CYP2D7 hybrid alleles, and reports a diplotype with a filter status.
 
 | | |
 |---|---|
-| Python | ≥ 3.8 with `numpy`, `scipy`, `pysam`, `pandas`, `statsmodels` |
+| Python | 3.6.8 (the validated interpreter). Install with `pip install -r requirements.txt`; the exact versions behind the published results are in `requirements-validated.txt` |
 | R | ≥ 4.2 with [CNVPanelizer](https://bioconductor.org/packages/CNVPanelizer/) (validated with v1.30.0, Bioconductor 3.16) |
 | Other | `samtools`; an aligner (see below) |
 | Input | Coordinate-sorted, duplicate-marked BAM/CRAM aligned to GRCh38 |
@@ -56,7 +56,7 @@ git clone https://github.com/yu-hui-lin/CyriPanel.git
 cd CyriPanel
 
 # Python dependencies
-pip install numpy scipy pysam pandas statsmodels
+pip install -r requirements.txt
 
 # R dependency (pinned to the validated release)
 Rscript -e 'if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager", repos="https://cloud.r-project.org"); BiocManager::install("CNVPanelizer", version="3.16", update=FALSE)'
@@ -320,11 +320,11 @@ CyriPanel/
 ├── run_cyripanel.sh         # 執行腳本
 ├── run_test_HG02129.sh      # 測試腳本
 ├── activate_cyripanel.sh    # 環境啟動腳本
-├── submit_cyripanel.slurm   # SLURM 工作腳本
+├── deployment/              # SLURM 提交腳本（NTUH 部署用）
 ├── caller/                  # Star allele 分析模組
 ├── depth_calling/           # CNV 分析模組
 ├── data/                    # 參考資料檔
-├── ref_dir/                 # CNVPanelizer 參考樣本 (20 個 diploid BAMs)
+├── ref_dir/                 # CNVPanelizer 參考樣本 (5-20 個 diploid BAM，預設 5 個)
 ├── manifests/               # .manifest files
 ├── test_data/               # 測試樣本
 ├── results/                 # 輸出結果
@@ -333,7 +333,7 @@ CyriPanel/
 
 ---
 Copyright © Yu-Hui Lin (林育慧) yhlin.md05@nycu.edu.tw
-Github: https://github.com/yu-hui-lin/CyriPanel/tree/main
+Github: https://github.com/yu-hui-lin/CyriPanel
 *CyriPanel is licensed under GPL-3.0. See LICENSE file for details.*
 
 </details>

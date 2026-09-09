@@ -61,7 +61,7 @@ tryCatch({
     install.packages("BiocManager", repos="https://cloud.r-project.org")
   }
   if (!requireNamespace("CNVPanelizer", quietly = TRUE)) {
-    BiocManager::install("CNVPanelizer", update=FALSE)
+    BiocManager::install("CNVPanelizer", version = "3.16", update = FALSE)
   }
   suppressPackageStartupMessages(library(CNVPanelizer))
   message("CNVPanelizer package loaded.")

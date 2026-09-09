@@ -77,6 +77,10 @@ if conda env list | grep -q "^${ENV_NAME} "; then
 fi
 
 if ! conda env list | grep -q "^${ENV_NAME} "; then
+    # The published results were produced on Python 3.6.8 (see
+    # requirements-validated.txt). 3.6 is end-of-life and has no current
+    # wheels, so this script builds a supported interpreter instead; the
+    # bounds in requirements.txt are what keep the dependency set compatible.
     conda create -n ${ENV_NAME} python=3.10 -y
 fi
 
@@ -89,7 +93,7 @@ log_info "Activated environment: ${ENV_NAME}"
 log_info "Step 3: Installing Python dependencies..."
 
 pip install --upgrade pip
-pip install numpy>=1.16 scipy>=1.2 pysam>=0.15.3 statsmodels>=0.9 pandas>=1.0.0
+pip install -r "${SCRIPT_DIR}/requirements.txt"
 
 log_info "Python dependencies installed successfully"
 
@@ -133,7 +137,7 @@ if (!requireNamespace('BiocManager', quietly = TRUE)) {
 }
 
 # Install CNVPanelizer
-BiocManager::install('CNVPanelizer', update=FALSE, ask=FALSE, lib='${R_LIB_PATH}')
+BiocManager::install('CNVPanelizer', version='3.16', update=FALSE, ask=FALSE, lib='${R_LIB_PATH}')
 
 # Verify installation
 library(CNVPanelizer)
