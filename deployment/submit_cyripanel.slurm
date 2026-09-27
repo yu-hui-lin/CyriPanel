@@ -12,7 +12,7 @@
 # ============================================
 
 # Load conda
-source /home/u7715055/.conda/envs/cyripanel/bin/activate
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate cyripanel
 
 # Get arguments

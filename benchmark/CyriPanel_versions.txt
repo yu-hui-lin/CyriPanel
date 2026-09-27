@@ -1,0 +1,117 @@
+captured 2026-09-09T17:29:15+08:00 on lgn304
+CyriPanel directory: /work/u7715055/staging/biology/u7715055/CyriPanel
+
+=== 1. CyriPanel source ===
+HEAD commit  : e6e029aa430e00aeb9864b944f7003df5a676a82
+HEAD short   : e6e029a
+HEAD date    : 2026-09-09T17:12:57+08:00
+branch       : main
+remote       : https://github.com/yu-hui-lin/CyriPanel.git
+tags at HEAD : 
+working tree : *** 22 UNCOMMITTED CHANGES — the hash above does not
+               describe what is on disk. Commit or stash before quoting it. ***
+                 ?? benchmark/CyriPanel_versions.txt
+                 ?? benchmark/aggregate_results.py
+                 ?? benchmark/final_aggregation.py
+                 ?? benchmark/generate_supplementary_file.py
+                 ?? benchmark/regenerate_supplementary.py
+                 ?? benchmark/smoke_test.sh
+                 ?? benchmark/smoke_test_n10.sh
+                 ?? benchmark/smoke_test_n20.sh
+                 ?? benchmark/test_hg01891.sh
+                 ?? benchmark/test_hybrids.sh
+                 ?? data/CYP2D6_cohort1_gold_standard.csv
+                 ?? data/CYP2D6_cohort1_gold_standard_AUDITED.csv
+                 ?? data/CYP2D6_cohort2_29diploids.csv
+                 ?? data/CYP2D6_cohort2_gold_standard.csv
+                 ?? data/CYP2D6_cohort2_gold_standard_AUDITED.csv
+                 ?? patch_d7_contamination_filter.py
+                 ?? ref_dir/HG00232.bam.md5sum
+                 ?? ref_dir/HG00350.bam.md5sum
+                 ?? ref_dir/HG00639.bam.md5sum
+                 ?? ref_dir/HG01940.bam.md5sum
+                 ?? ref_dir/NA21102.bam.md5sum
+                 ?? test_data/
+
+recent commits — identify the one that produced the benchmark results:
+  e6e029a  2026-09-09  Add the benchmark framework, the Aldy 4 comparison and the gold standards
+  c24a828  2026-09-09  Correct three statements that no longer matched the code or the data
+  a410ae1  2026-09-09  Record the validated dependency versions and pin CNVPanelizer
+  f3e1fcb  2026-09-06  Add deCYPher reference genotypes and a data directory README
+  e33e5bd  2026-09-04  Rewrite README for external users
+  85dddcf  2026-09-04  Move the site-specific SLURM script into deployment/
+  42eb842  2026-09-04  Move the site-specific SLURM script into deployment/
+  541fe79  2026-09-04  Keep ref_dir/ in the repository so a fresh clone has somewhere to put reference BAMs
+  5d78a6b  2026-09-04  Add run scripts and update the inherited test suite
+  16dd926  2026-09-04  Update GRCh38 resource tables and add the panel target BED
+  07b329b  2026-09-04  Remove WGS-specific components and hg19/hg37 resources
+  7ff21cf  2026-09-04  Adapt the Cyrius caller for targeted sequencing panels
+  534600e  2026-09-04  Add CNVPanelizer-based copy-number estimation
+  40bc9c3  2026-09-04  Fix LICENSE file mode (remove executable bit)
+  2692c7b  2026-09-03  Replace stray LICENSE.txt with the project's actual licence
+
+=== 2. Is CNVPanelizer version-pinned in the code? ===
+61:    install.packages("BiocManager", repos="https://cloud.r-project.org")
+64:    BiocManager::install("CNVPanelizer", version = "3.16", update = FALSE)
+
+=== 3. R, Bioconductor and CNVPanelizer ===
+R version         : R version 4.2.1 (2022-06-23) 
+Platform          : x86_64-redhat-linux-gnu 
+Bioconductor      : 3.16 
+CNVPanelizer      : 1.30.0 
+  Date/Publication: 2022-11-01   <-- year for the citation
+  Built           : R 4.2.1; ; 2025-07-30 10:11:25 UTC; unix 
+  Installed at    : /home/u7715055/R/library/CNVPanelizer 
+
+library paths:
+   /home/u7715055/R/library 
+   /usr/lib64/R/library 
+   /usr/share/R/library 
+
+CNVPanelizer dependencies:
+  Rsamtools        2.14.0
+  GenomicRanges    1.50.2
+  IRanges          2.32.0
+  S4Vectors        0.36.2
+  BiocGenerics     0.44.0
+  foreach          1.5.2
+  exomeCopy        1.44.0
+  GenomeInfoDb     1.34.9
+  BiocParallel     1.32.6
+
+--- DESCRIPTION, verbatim cross-check ---
+  Package: CNVPanelizer
+  Version: 1.30.0
+  git_url: https://git.bioconductor.org/packages/CNVPanelizer
+  git_last_commit: e0047ba
+  Date/Publication: 2022-11-01
+  Built: R 4.2.1; ; 2025-07-30 10:11:25 UTC; unix
+
+=== 4. Python toolchain ===
+python3 resolves to: /opt/ohpc/Taiwania3/pkg/miniconda3/24.1.2/bin/python3
+VIRTUAL_ENV        : <none active>
+
+Python            : 3.12.1
+  pysam            0.23.3
+  numpy            2.3.0
+  scipy            1.18.1
+  pandas           2.3.0
+  statsmodels      0.15.0
+
+=== 5. Alignment and BAM tools ===
+  samtools   not on PATH
+  bwa        not on PATH
+  bwa-mem2   not on PATH
+  bcftools   not on PATH
+  picard     not on PATH
+  java       Unrecognized option: --version
+
+=== 6. Loaded modules ===
+  No modules loaded
+
+=== done ===
+
+Still to record by hand (nothing on the cluster knows these):
+  - Zenodo DOI, minted from the commit above after the pending fixes
+  - DRAGEN version and hash-table build
+  - deCYPher version/commit; PharmVar release behind data/star_table.txt
