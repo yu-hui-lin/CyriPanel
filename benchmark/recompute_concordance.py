@@ -28,17 +28,18 @@ import pandas as pd
 from collections import defaultdict
 
 # Set up paths and imports
-SCRIPT_DIR = '/work/u7715055/staging/biology/u7715055/CyriPanel/benchmark'
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 import benchmark_config as cfg
 from run_single_iteration import compare_genotype, normalize_genotype
 
 # v2 gold standards
+_GOLD_DIR = os.path.join(SCRIPT_DIR, 'data')   # gold standards ship with the repo
 COHORT_V2_GOLD = {
-    'cohort1_dragen': '/work/u7715055/staging/biology/u7715055/CyriPanel/benchmark/data/CYP2D6_cohort1_gold_standard_v2.csv',
-    'cohort2_dragen': '/work/u7715055/staging/biology/u7715055/CyriPanel/benchmark/data/CYP2D6_cohort2_gold_standard_v2.csv',
-    'cohort1': '/work/u7715055/staging/biology/u7715055/CyriPanel/benchmark/data/CYP2D6_cohort1_gold_standard_v2.csv',
-    'cohort2': '/work/u7715055/staging/biology/u7715055/CyriPanel/benchmark/data/CYP2D6_cohort2_gold_standard_v2.csv',
+    'cohort1_dragen': os.path.join(_GOLD_DIR, 'CYP2D6_cohort1_gold_standard_v2.csv'),
+    'cohort2_dragen': os.path.join(_GOLD_DIR, 'CYP2D6_cohort2_gold_standard_v2.csv'),
+    'cohort1': os.path.join(_GOLD_DIR, 'CYP2D6_cohort1_gold_standard_v2.csv'),
+    'cohort2': os.path.join(_GOLD_DIR, 'CYP2D6_cohort2_gold_standard_v2.csv'),
 }
 
 OUT_DIR = '/work/u7715055/staging/biology/u7715055/cyripanel_benchmark_results/recompute_v2'
@@ -84,7 +85,7 @@ def recompute_iteration(json_path, v2_gold):
         filt = ps.get('filter')
         
         # Track summary
-        if gold_v2 is not None and called is not None:
+        if gold_v2 is not None:
             n_tested_with_gold += 1
         if comp_v2 == 'concordant':
             n_concordant_v2 += 1
@@ -221,7 +222,7 @@ def main():
         for _, row in df_c.iterrows():
             sid = row['sample_id']
             panel = row['panel_size']
-            if pd.notna(row['gold_v2']) and row['called_genotype']:
+            if pd.notna(row['gold_v2']):
                 per_sample[sid][panel]['n_test'] += 1
                 per_sample[sid][panel]['gold'] = row['gold_v2']
                 if row['comparison_v2'] == 'concordant':

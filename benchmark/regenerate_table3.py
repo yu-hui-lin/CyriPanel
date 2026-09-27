@@ -67,9 +67,15 @@ import pandas as pd
 # Paths
 # ----------------------------------------------------------------------
 ROOT       = '/work/u7715055/staging/biology/u7715055'
-CYRI_DIR   = os.path.join(ROOT, 'CyriPanel')
-PER_SAMPLE = os.path.join(ROOT, 'cyripanel_benchmark_results/recompute_v2/per_sample_v2.csv')
-ALDY_LONG  = os.path.join(ROOT, 'aldy_bench/aldy_results_long.csv')
+CYRI_DIR   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Prefer the copies that ship with the repository, so the script runs from a clean
+# clone; fall back to the HPC work tree where the analysis was originally produced.
+PER_SAMPLE = os.path.join(CYRI_DIR, 'benchmark', 'published_results', 'per_sample_v2.csv')
+ALDY_LONG  = os.path.join(CYRI_DIR, 'benchmark', 'aldy', 'aldy_results_long.csv')
+if not os.path.exists(PER_SAMPLE):
+    PER_SAMPLE = os.path.join(ROOT, 'cyripanel_benchmark_results/recompute_v2/per_sample_v2.csv')
+if not os.path.exists(ALDY_LONG):
+    ALDY_LONG = os.path.join(ROOT, 'aldy_bench/aldy_results_long.csv')
 GOLD = {
     'cohort1': os.path.join(CYRI_DIR, 'benchmark/data/CYP2D6_cohort1_gold_standard_v2.csv'),
     'cohort2': os.path.join(CYRI_DIR, 'benchmark/data/CYP2D6_cohort2_gold_standard_v2.csv'),
@@ -186,7 +192,10 @@ def newcombe10(a, b, c, d, z=Z95):
     l1, u1 = wilson(a + b, n, z)
     l2, u2 = wilson(a + c, n, z)
     A = (a + b) * (c + d) * (a + c) * (b + d)
-    phi = 0.0 if A == 0 else (a * d - b * c) / math.sqrt(A)
+    num = a * d - b * c
+    if num > 0:                      # eh > fg: continuity-correct phi (Newcombe method 10,
+        num = max(num - n / 2, 0.0)  # Statist Med 1998;17:2635-50, p. 2639)
+    phi = 0.0 if A == 0 else num / math.sqrt(A)
     t1, t2 = p1 - l1, u2 - p2
     lo = theta - math.sqrt(max(0.0, t1 * t1 - 2 * phi * t1 * t2 + t2 * t2))
     t3, t4 = u1 - p1, p2 - l2
@@ -205,14 +214,26 @@ def mcnemar_exact(b, c):
 
 
 def selftest():
-    lo, hi = newcombe10(19, 7, 0, 2)
+    # Newcombe RG. Statist Med 1998;17:2635-50, Table III (p. 2641): published
+    # 95% intervals for method 10.  Cells are (e, f, g, h) in Newcombe's notation.
+    published = [((36, 12, 2, 0),  (0.0569, 0.3404)),
+                 ((20, 12, 2, 16), (0.0562, 0.3292)),
+                 ((18, 12, 2, 18), (0.0562, 0.3290)),
+                 ((36, 14, 0, 0),  (0.1528, 0.4167)),
+                 ((35, 14, 0, 1),  (0.1461, 0.4175)),
+                 ((18, 14, 0, 18), (0.1441, 0.3963))]
+    bad_ci = []
+    for cells, (want_lo, want_hi) in published:
+        lo, hi = newcombe10(*cells)
+        if abs(lo - want_lo) > 5e-4 or abs(hi - want_hi) > 5e-4:
+            bad_ci.append((cells, (round(lo, 4), round(hi, 4)), (want_lo, want_hi)))
+        print('Newcombe m10 e=%2d f=%2d g=%d h=%2d -> (%.4f, %.4f)   published (%.4f, %.4f)'
+              % (cells + (lo, hi, want_lo, want_hi)))
     p = mcnemar_exact(7, 0)
-    ok = (abs(lo - 0.0873) < 5e-4 and abs(hi - 0.4210) < 5e-4
-          and abs(p - 0.015625) < 1e-9)
-    print('Newcombe method 10, a=19 b=7 c=0 d=2 -> RD %+.1f%% (%+.1f%%, %+.1f%%)'
-          % (100 * (7 - 0) / 28, 100 * lo, 100 * hi))
-    print('exact McNemar b=7 c=0 -> p = %.6f' % p)
-    print('expected from draft: +25.0%% (+8.7%%, +42.1%%), p = 0.0156')
+    ok = (not bad_ci) and abs(p - 0.015625) < 1e-9
+    print('exact McNemar b=7 c=0 -> p = %.6f   (expected 0.015625)' % p)
+    if bad_ci:
+        print('CI MISMATCHES: %s' % bad_ci)
     print('SELFTEST %s' % ('PASS' if ok else 'FAIL'))
     # stratum assignment spot checks
     cases = [('*1/*4', 'no_SV'), ('*27/*2', 'no_SV'), ('*1/*162', 'no_SV'),

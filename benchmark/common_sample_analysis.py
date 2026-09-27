@@ -62,7 +62,7 @@ sys.path.insert(0, SCRIPT_DIR)
 import benchmark_config as cfg              # noqa: E402
 from run_single_iteration import compare_genotype   # noqa: E402
 
-DATA_DIR = os.path.join(cfg.CYRIPANEL_SRC_DIR, "data")
+DATA_DIR = os.path.join(SCRIPT_DIR, "data")   # gold standards ship with the repo
 
 GOLD_FILES = {
     "v1": {
@@ -125,9 +125,10 @@ def load_long_table(cohorts, panel_sizes, gold_version):
                         "gold": g,
                         "comparison": comp,
                         "filter": ps.get("filter"),
-                        # "evaluable" mirrors the denominator used in the headline table:
-                        # a sample counts only when it has both a call and a gold genotype.
-                        "evaluable": bool(called is not None and g is not None),
+                        # "evaluable" mirrors the denominator used in the headline table: a sample
+                        # counts whenever it has a gold genotype; a no-call is retained and
+                        # scored as a failure rather than treated as missing data.
+                        "evaluable": bool(g is not None),
                         "concordant": comp == "concordant",
                     })
     return pd.DataFrame(rows)
