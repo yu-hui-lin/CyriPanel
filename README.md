@@ -2,6 +2,9 @@
 
 CYP2D6 star-allele genotyping from laboratory-developed targeted sequencing panels.
 
+⚠️ **Disclaimer: Research Use Only (RUO)**
+CyriPanel is a computational research tool developed for methodological evaluation of targeted capture sequencing data. It is **not** intended for clinical diagnostics, patient management, or prescribing decisions.
+
 CyriPanel is derived from [Cyrius](https://github.com/Illumina/Cyrius) (Illumina) and
 incorporates the updated star-allele definitions of
 [BCyrius](https://github.com/Halman-Lab/BCyrius). It keeps Cyrius's paralogue-aware
