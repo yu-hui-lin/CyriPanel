@@ -34,7 +34,6 @@ Usage:
     python3 common_sample_analysis.py
     python3 common_sample_analysis.py --min-obs 5      # require >=5 evaluable iters/arm
     python3 common_sample_analysis.py --cohorts cohort1 cohort2
-    python3 common_sample_analysis.py --gold-version v2
 
 Run it on the HPC, where BENCHMARK_ROOT lives. It re-reads iteration_results.json only;
 it never re-runs CyriPanel.
@@ -65,14 +64,8 @@ from run_single_iteration import compare_genotype   # noqa: E402
 DATA_DIR = os.path.join(SCRIPT_DIR, "data")   # gold standards ship with the repo
 
 GOLD_FILES = {
-    "v1": {
-        "cohort1": "CYP2D6_cohort1_gold_standard.csv",
-        "cohort2": "CYP2D6_cohort2_gold_standard.csv",
-    },
-    "v2": {
-        "cohort1": "CYP2D6_cohort1_gold_standard_v2.csv",
-        "cohort2": "CYP2D6_cohort2_gold_standard_v2.csv",
-    },
+    "cohort1": "CYP2D6_cohort1_gold_standard_v2.csv",
+    "cohort2": "CYP2D6_cohort2_gold_standard_v2.csv",
 }
 
 # A dragen cohort shares its base cohort's gold standard.
@@ -86,18 +79,18 @@ OUT_DIR = os.path.join(cfg.BENCHMARK_ROOT, "common_sample_analysis")
 # Loading
 # ──────────────────────────────────────────────────────────────────────
 
-def load_gold(cohort, version):
-    fname = GOLD_FILES[version][base_cohort(cohort)]
+def load_gold(cohort):
+    fname = GOLD_FILES[base_cohort(cohort)]
     path = os.path.join(DATA_DIR, fname)
     with open(path) as f:
         return {r["Sample_ID"]: r["Genotype"] for r in csv.DictReader(f)}
 
 
-def load_long_table(cohorts, panel_sizes, gold_version):
+def load_long_table(cohorts, panel_sizes):
     """Return a long DataFrame: one row per (cohort, panel, iter, sample)."""
     rows = []
     for cohort in cohorts:
-        gold = load_gold(cohort, gold_version)
+        gold = load_gold(cohort)
         for panel in panel_sizes:
             base = os.path.join(cfg.BENCHMARK_ROOT, cohort, "panel%d" % panel)
             files = sorted(glob.glob(os.path.join(base, "iter_*/iteration_results.json")))
@@ -241,7 +234,6 @@ def main():
                     default=["cohort1", "cohort2", "cohort1_dragen", "cohort2_dragen"])
     ap.add_argument("--panel-sizes", nargs="+", type=int,
                     default=cfg.REFERENCE_PANEL_SIZES)
-    ap.add_argument("--gold-version", choices=["v1", "v2"], default="v2")
     ap.add_argument("--min-obs", type=int, default=1,
                     help="minimum evaluable iterations per arm for a sample to be common "
                          "(default 1; use 5 for a stricter set)")
@@ -250,8 +242,8 @@ def main():
 
     os.makedirs(args.out_dir, exist_ok=True)
 
-    print("Loading iteration results (gold standard %s)..." % args.gold_version)
-    df = load_long_table(args.cohorts, args.panel_sizes, args.gold_version)
+    print("Loading iteration results...")
+    df = load_long_table(args.cohorts, args.panel_sizes)
     if df.empty:
         print("No iteration results found. Check BENCHMARK_ROOT in benchmark_config.py.")
         return 1
@@ -303,7 +295,6 @@ def main():
                 "concordance_per_iteration_sd": pi.std(),
                 "concordance_per_sample_mean": psx.mean(),
                 "concordance_per_sample_sd": psx.std(),
-                "gold_version": args.gold_version,
                 "min_obs": args.min_obs,
             })
 
