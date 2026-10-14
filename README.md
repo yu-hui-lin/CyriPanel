@@ -23,12 +23,12 @@ CYP2D6–CYP2D7 hybrid alleles, and reports a diplotype with a filter status.
 
 ## Requirements
 
-| | |
-|---|---|
-| Python | 3.6.8 (the validated interpreter). Install with `pip install -r requirements.txt`; the exact versions behind the published results are in `requirements-validated.txt` |
-| R | ≥ 4.2 with [CNVPanelizer](https://bioconductor.org/packages/CNVPanelizer/) (validated with v1.30.0, Bioconductor 3.16) |
-| Other | `samtools`; an aligner (see below) |
-| Input | Coordinate-sorted, duplicate-marked BAM/CRAM aligned to GRCh38 |
+|        |                                                              |
+| ------ | ------------------------------------------------------------ |
+| Python | 3.6.8 (the validated interpreter). Install with `pip install -r requirements.txt`; the exact versions used for the benchmark in the accompanying preprint are in `requirements-validated.txt` |
+| R      | ≥ 4.2 with [CNVPanelizer](https://bioconductor.org/packages/CNVPanelizer/) (validated with v1.30.0, Bioconductor 3.16) |
+| Other  | `samtools`; an aligner (see below)                           |
+| Input  | Coordinate-sorted, duplicate-marked BAM/CRAM aligned to GRCh38 |
 
 ### Alignment matters more than usual
 
@@ -37,16 +37,16 @@ mapping quality 0. With a plain BWA-MEM alignment, **80–90 % of reads across t
 locus carry MAPQ 0**, and because CNVPanelizer counts only reads at MAPQ ≥ 20 the
 copy-number step is then starved of data at exactly the locus of interest.
 
-Two alignment routes are validated:
+Two alignment routes were evaluated in the benchmark:
 
 ```bash
-# ALT-aware BWA-MEM (used for the published benchmark)
+# ALT-aware BWA-MEM
 bwa mem -Y -K 100000000 GRCh38_full_analysis_set_plus_decoy_hla.fa ...
 # the accompanying .alt file must be present beside the reference
 ```
 
 or **Illumina DRAGEN**, which retains > 85 % of reads at MAPQ ≥ 20 natively and needs no
-ALT-aware workaround. DRAGEN is what the NTUH clinical service uses.
+ALT-aware workaround.
 
 Duplicates should be marked but **not removed** — capture duplicates carry depth signal.
 
@@ -76,16 +76,16 @@ on an HPC where `module load miniconda3` is available.
 
 A standard 4-column BED (`chrom  start  end  name`) describing your capture targets.
 CyriPanel picks up the single `.bed` file it finds in `data/`; the panel used in the
-published work, `PGxProbe_region_hg38.bed`, is included as a reference.
+benchmark, `PGxProbe_region_hg38.bed`, is included as a reference.
 
 **Your BED must contain three intervals with these exact names**, because the copy-number
 step looks them up by name:
 
-| Name | GRCh38 interval | Purpose |
-|---|---|---|
-| `CYP2D6plusREP6_hapcn2` | chr22:42,123,192-42,132,032 | CYP2D6 plus REP6 |
-| `CYP2D7` | chr22:42,139,676-42,145,745 | CYP2D7 |
-| `D7spacer_hapcn1` | chr22:42,138,124-42,139,676 | CYP2D7 downstream spacer, used to resolve hybrids |
+| Name                    | GRCh38 interval             | Purpose                                           |
+| ----------------------- | --------------------------- | ------------------------------------------------- |
+| `CYP2D6plusREP6_hapcn2` | chr22:42,123,192-42,132,032 | CYP2D6 plus REP6                                  |
+| `CYP2D7`                | chr22:42,139,676-42,145,745 | CYP2D7                                            |
+| `D7spacer_hapcn1`       | chr22:42,138,124-42,139,676 | CYP2D7 downstream spacer, used to resolve hybrids |
 
 A panel that does not capture these regions cannot be genotyped by CyriPanel. If yours
 covers them under different names, rename them in your BED.
@@ -96,8 +96,8 @@ Between 5 and 20 samples that are **CYP2D6 diploid with no structural variant**,
 with the *same* wet-lab protocol and processed with the *same* alignment pipeline as the
 samples you want to genotype. Each needs its `.bai` index.
 
-Five is sufficient: performance was equivalent at 5, 10 and 20 in the published evaluation,
-and the NTUH clinical service runs with five.
+In the benchmark, concordance did not differ detectably between panels of 5, 10 and 20
+references. Larger panels only lengthened runtime.
 
 ```
 ref_dir/
@@ -151,15 +151,18 @@ raw allele counts.
 
 ### Filter values
 
-| Filter | Meaning |
-|---|---|
-| `PASS` | A single diplotype was assigned |
-| `More_than_one_possible_genotype` | Several diplotypes explain the data equally well; all are listed, separated by `;` |
-| `Not_assigned_to_haplotypes` | Alleles were identified but could not be split into two haplotypes |
-| `CNV_Group_Not_Accepted` | No consistent structural configuration could be inferred |
-| `Invalid_Total_CN` / `CN_Determination_Failed` | The copy-number step did not produce a usable estimate |
+| Filter                                         | Meaning                                                      |
+| ---------------------------------------------- | ------------------------------------------------------------ |
+| `PASS`                                         | A single diplotype was assigned                              |
+| `More_than_one_possible_genotype`              | Several diplotypes explain the data equally well; all are listed, separated by `;` |
+| `Not_assigned_to_haplotypes`                   | Alleles were identified but could not be split into two haplotypes |
+| `CNV_Group_Not_Accepted`                       | No consistent structural configuration could be inferred     |
+| `Invalid_Total_CN` / `CN_Determination_Failed` | The copy-number step did not produce a usable estimate       |
 
-Treat anything other than `PASS` as requiring review or orthogonal testing.
+Treat anything other than `PASS` as requiring review or orthogonal testing. A `PASS`
+status means only that the call met the implemented acceptance rules. In the benchmark,
+one sample received `PASS` in every evaluation although most of its calls missed one
+`*36` copy.
 
 ---
 
@@ -182,13 +185,17 @@ Treat anything other than `PASS` as requiring review or orthogonal testing.
 
 ---
 
-## Validation
+## Benchmark
 
-CyriPanel was evaluated on 116 Human Pangenome Reference Consortium samples sequenced on a
-laboratory-developed pharmacogenomic panel, using assembly-derived diplotypes as the
+CyriPanel was evaluated on 116 Human Pangenome Reference Consortium cell lines sequenced
+on a laboratory-developed pharmacogenomic panel, using assembly-derived diplotypes as the
 reference standard, with reference panels of 5, 10 and 20 samples drawn at random over 30
 iterations each. Details, including the comparison with Aldy 4, are in the accompanying
-publication; the evaluation framework will be deposited alongside it.
+preprint.
+
+The reference-standard diplotypes, the per-evaluation results of both callers and the
+analysis scripts are in [`benchmark/`](benchmark/README.md), which lists the script
+behind each table of the preprint.
 
 ### Known limitations
 
@@ -203,149 +210,13 @@ publication; the evaluation framework will be deposited alongside it.
 
 ---
 
-## Deployment at NTUH
-
-The clinical pharmacogenomics service at National Taiwan University Hospital runs CyriPanel
-on the NCHC cluster. `deployment/` holds the SLURM submission script used there; it
-hard-codes that site's account, partition and paths and is kept as a worked example.
-
-<details>
-<summary>國網部署說明（中文）</summary>
-
-###  國網位址 (Location)
-
-```bash
-/staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/CyriPanel
-```
-
-### 快速開始 (Quick Start)
-
-### 0. 放置 5-20 個已知為 diploid、無 CNV/SV 的檢體至
-```bash
-/staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel/ref_dir
-```
-
--  **！！！ BAM 檔需由 Illumina Dragen 作為 aligner 生成 ！！！**
-- 須為與待檢檢體相同 wet lab 流程產出
-- 每個 BAM 檔需有對應的 .bai 索引檔
-
-預設為 NA21102, HG01940, HG00639, HG00350, HG00232 五個檢體
-
-### 1. 啟動環境
-
-```bash
-# 載入miniconda
-module load biology
-module load miniconda3
-
-# 載入並啟動 CyriPanel 環境
-cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
-source activate_cyripanel.sh
-```
-
-### 2. 驗證安裝 (Validation Test)
-
-執行測試樣本 HG02129 以確認安裝正確：
-
-```bash
-cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
-bash run_test_HG02129.sh
-```
-
-預期結果：
-
-```bash
-[INFO] Called Genotype: *1/*36+*10
-[INFO] Filter Status: PASS
-[INFO] Expected Genotype: *1/*36+*10
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║   ✓ TEST PASSED - EXACT MATCH                               ║
-║                                                              ║
-║   CyriPanel is correctly installed and configured!          ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
-```
-
-### 3. 建立 .manifest 
-
-假設要分析 /sample_directory 資料夾內所有 .bam
-
-```bash
-# 自動列出所有 BAM 檔案
-cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
-ls /sample_directory/*.bam > manifests/my_samples.manifest
-
-# 檢查內容
-cat manifests/my_samples.manifest
-```
-
-### 4. 執行批次分析 
-
-##### 方式 A：直接在登入節點執行（小量批次樣本）
-
-```bash
-bash run_cyripanel.sh --manifest manifests/my_samples.manifest batch_name
-```
-
-batch_name: 就是一個輸出檔案的前綴名稱，你可以自己取名，例如：PG_batch20260129
-輸出檔案會變成：results/PG_batch20260129_cyp2d6.tsv
-
-##### 方式 B：提交 SLURM 工作 (把工作提交到計算節點，不會佔用登入節點資源)
-
-```bash
-sbatch deployment/submit_cyripanel.slurm manifests/my_samples.manifest batch_name
-```
-
-batch_name: 就是一個輸出檔案的前綴名稱，你可以自己取名，例如：PG_batch20260129
-輸出檔案會變成：results/PG_batch20260129_cyp2d6.tsv
-
-### 輸出檔案 (Output Files)
-
-| 檔案              | 說明                             |
-| --------------- | ------------------------------ |
-| `{prefix}.tsv`  | 簡化結果（Sample, Genotype, Filter） |
-| `{prefix}.json` | 完整結果（包含 CNV 資訊、變異位點等）          |
-
-### TSV 輸出範例
-
-```
-Sample      Genotype        Filter
-HG02129     *1/*10+*36      PASS
-HG00436     *2/*41          PASS
-```
-
-### 目錄結構 (Directory Structure)
-
-```
-CyriPanel/
-├── star_caller.py           # 主程式
-├── run_cyripanel.sh         # 執行腳本
-├── run_test_HG02129.sh      # 測試腳本
-├── activate_cyripanel.sh    # 環境啟動腳本
-├── deployment/              # SLURM 提交腳本（NTUH 部署用）
-├── caller/                  # Star allele 分析模組
-├── depth_calling/           # CNV 分析模組
-├── data/                    # 參考資料檔
-├── ref_dir/                 # CNVPanelizer 參考樣本 (5-20 個 diploid BAM，預設 5 個)
-├── manifests/               # .manifest files
-├── test_data/               # 測試樣本
-├── results/                 # 輸出結果
-└── logs/                    # 日誌檔案
-```
-
----
-Copyright © Yu-Hui Lin (林育慧) yhlin.md05@nycu.edu.tw
-Github: https://github.com/yu-hui-lin/CyriPanel
-*CyriPanel is licensed under GPL-3.0. See LICENSE file for details.*
-
-</details>
-
----
-
 ## Citation
 
-*(publication details to follow)*
+If you use CyriPanel, please cite the accompanying preprint:
+
+- Lin Y-H, Chang T-Y, Huang K-T, et al. CyriPanel for *CYP2D6* genotyping from targeted
+  capture panels using assay-matched diploid references. *bioRxiv* 2026.
+  doi: (added when the preprint is posted)
 
 CyriPanel builds on:
 
@@ -358,7 +229,8 @@ CyriPanel builds on:
 
 ## License
 
-GNU General Public License v3.0, inherited from Cyrius. See `LICENSE`.
+See [`LICENSE`](LICENSE). Source files derived from Cyrius and BCyrius retain their
+original copyright notices.
 
 ## Contact
 
