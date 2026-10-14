@@ -1,0 +1,32 @@
+{
+  "title": "CyriPanel: CYP2D6 genotyping from targeted capture panels",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Lin, Yu-Hui",
+      "affiliation": "National Taiwan University Hospital"
+    }
+  ],
+  "description": "<p>CyriPanel genotypes <i>CYP2D6</i> star alleles from targeted capture sequencing. It adapts the paralog-aware framework of Cyrius and the BCyrius allele table, and estimates copy number against diploid reference samples sequenced with the same assay.</p><p>This release accompanies the preprint <i>CyriPanel for CYP2D6 Genotyping from Targeted Capture Panels Using Assay-Matched Diploid References</i>. The benchmark/ directory holds the reference-standard diplotypes, the per-evaluation results for CyriPanel and Aldy 4, and the analysis scripts. benchmark/README.md lists the script or data source behind each table.</p><p>CyriPanel is research software. The benchmark measured analytical concordance in reference cell lines and is not a clinical validation.</p>",
+  "keywords": [
+    "CYP2D6",
+    "pharmacogenomics",
+    "star allele",
+    "targeted sequencing",
+    "copy number",
+    "hybrid allele"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Illumina/Cyrius",
+      "relation": "isDerivedFrom",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/Halman-Lab/BCyrius",
+      "relation": "isDerivedFrom",
+      "resource_type": "software"
+    }
+  ],
+  "notes": "Changes from v1.0.1 are in the documentation, two code comments and the benchmark folder. The analysis scripts behind the preprint's tables were added, and the columns of a superseded reference standard were removed from the benchmark records. Site-specific deployment files were removed. The calling logic is unchanged."
+}
