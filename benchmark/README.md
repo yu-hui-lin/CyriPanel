@@ -16,13 +16,14 @@ Table numbers follow the preprint.
 | Table 5, concordance | `recalculate.py` | `published_results/per_sample_v2.csv` |
 | Table 5, all columns | `table5.py` | `published_results/per_sample_v2.csv` |
 | Reference-panel size, per-sample means and paired differences | `recalculate.py` | `published_results/per_sample_v2.csv` |
-| Reference-panel size, Friedman and Wilcoxon tests | `common_sample_analysis.py` | per-iteration outputs |
+| Reference-panel size, Friedman and Wilcoxon tests | `panel_size_tests.py`, after `recalculate.py` | `recalculate_output/common_sample_rates.csv` |
 | Discordant samples and sequencing quality | `inspect_seq_qc.py` | `published_results/CyriPanel_seq_qc.tsv`, sample calls from `regenerate_table3.py` |
 | Supplemental Table S1 | none | `data/` |
 | Supplemental Tables S3 and S4 | `supplemental_s3_s4.py` | `published_results/`, `aldy/`, `data/` |
 | Supplemental Table S5 | `count_spanning_pairs.sh` | BAM files |
 | Supplemental Table S6 | none | per-iteration outputs |
 | Supplemental Table S7 | `mem_audit.py` for the memory columns | SLURM accounting records |
+| Sensitivity analyses, filter exclusion and discordance types | `sensitivity_analyses.py`, after `recalculate.py` | `published_results/`, `aldy/`, `data/`, `recalculate_output/` |
 
 `recompute_concordance.py` read the per-iteration outputs and wrote `per_sample_v2.csv`
 and `iteration_summary_v2.csv` in `published_results/`. It also reported the PASS, no-call
