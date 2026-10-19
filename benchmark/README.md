@@ -107,8 +107,5 @@ scripts and renamed the columns that held it. The scoring is unchanged.
   regenerable from the scripts here.
 - BAM files; see the preprint's data-availability statement.
 - SLURM accounting records.
-- Earlier reference-standard assignments. Releases before v1.0.2 also listed the output of a
-  superseded deCYPher build (gold_v1 and the matching v1 columns), which assigned *185 instead
-  of *4 in eight samples. The preprint does not use them, and v1.0.2 removes them.
 - Development and smoke-test scripts, and the supplementary-workbook generators, which
   predate the corrected tables and would produce numbers inconsistent with them.
