@@ -7,7 +7,7 @@ CyriPanel is a computational research tool developed for methodological evaluati
 
 CyriPanel is derived from [Cyrius](https://github.com/Illumina/Cyrius) (Illumina) and
 incorporates the updated star-allele definitions of
-[BCyrius](https://github.com/Halman-Lab/BCyrius). It keeps Cyrius's paralogue-aware
+[BCyrius](https://gitlab.com/andreassh/bcyrius). It keeps Cyrius's paralogue-aware
 variant calling and star-allele matching, but replaces the copy-number step: instead of a
 Gaussian mixture model fitted to whole-genome coverage, copy number is estimated with
 [CNVPanelizer](https://bioconductor.org/packages/CNVPanelizer/) against a small cohort of
@@ -229,8 +229,10 @@ CyriPanel builds on:
 
 ## License
 
-See [`LICENSE`](LICENSE). Source files derived from Cyrius and BCyrius retain their
-original copyright notices.
+CyriPanel is distributed under the GNU General Public License, version 3 or later. See
+[`LICENSE`](LICENSE). Source files derived from Cyrius and BCyrius retain their original
+copyright notices. BCyrius is distributed under the Apache License 2.0, and a copy of that
+license is in [`LICENSE-APACHE.txt`](LICENSE-APACHE.txt).
 
 ## Contact
 
