@@ -1,6 +1,7 @@
 {
   "title": "CyriPanel: CYP2D6 genotyping from targeted capture panels",
   "upload_type": "software",
+  "license": "gpl-3.0-or-later",
   "creators": [
     {
       "name": "Lin, Yu-Hui",
@@ -23,10 +24,10 @@
       "resource_type": "software"
     },
     {
-      "identifier": "https://github.com/Halman-Lab/BCyrius",
+      "identifier": "https://gitlab.com/andreassh/bcyrius",
       "relation": "isDerivedFrom",
       "resource_type": "software"
     }
   ],
-  "notes": "Changes from v1.0.1 are in the documentation, two code comments and the benchmark folder. The analysis scripts behind the preprint's tables were added, and the columns of a superseded reference standard were removed from the benchmark records. Site-specific deployment files were removed. The calling logic is unchanged."
+  "notes": "Changes from v1.0.1 are in the documentation, the license information, two code comments and the benchmark folder. The analysis scripts behind the preprint's tables were added, and the columns of a superseded reference standard were removed from the benchmark records. Site-specific deployment files were removed. The calling logic is unchanged."
 }
