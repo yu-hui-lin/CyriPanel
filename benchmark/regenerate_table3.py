@@ -510,7 +510,7 @@ def main():
                'call and a gold-standard genotype) whose Genotype filter was PASS; the '
                'no-call rate is reported separately. This is the same denominator used '
                'for concordance, so the two columns are directly comparable.', '',
-               '| Cohort | Aligner | Panel size | Single-candidate concordance | PASS rate | mean no-calls |',
+               '| Cohort | Aligner | Panel size | Concordance | PASS rate | mean no-calls |',
                '|---|---|---|---|---|---|']
         p_rows = []
         for coh in ['cohort1', 'cohort2', 'cohort1_dragen', 'cohort2_dragen']:
@@ -521,12 +521,12 @@ def main():
                 aln = 'DRAGEN' if coh.endswith('_dragen') else 'BWA-MEM'
                 md.append('| %s | %s | %d | %.1f ± %.1f %% | %.1f ± %.1f %% | %.2f |'
                           % (coh.replace('_dragen', '')[-1], aln, panel,
-                             100 * sub['concordance_single'].mean(), 100 * sub['concordance_single'].std(),
+                             100 * sub['concordance_v2'].mean(), 100 * sub['concordance_v2'].std(),
                              100 * sub['pass_rate'].mean(), 100 * sub['pass_rate'].std(),
                              sub['n_no_call'].mean()))
                 p_rows.append(dict(cohort=coh, aligner=aln, panel_size=panel,
-                                   concordance_mean=sub['concordance_single'].mean(),
-                                   concordance_sd=sub['concordance_single'].std(),
+                                   concordance_mean=sub['concordance_v2'].mean(),
+                                   concordance_sd=sub['concordance_v2'].std(),
                                    pass_rate_mean=sub['pass_rate'].mean(),
                                    pass_rate_sd=sub['pass_rate'].std(),
                                    n_no_call_mean=sub['n_no_call'].mean(),

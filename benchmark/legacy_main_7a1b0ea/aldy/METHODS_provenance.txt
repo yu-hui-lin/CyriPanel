@@ -1,0 +1,61 @@
+=== Aldy4 benchmark provenance ===
+
+TOOL
+  aldy 4.7   (pip show aldy; also printed in each run's stderr header)
+  venv     : /home/u7715055/aldy_new_env   (Python 3.12.2)
+  modules  : biology, Samtools/1.15.1, python/3.12.2
+  ILP solver: CBC  (solver=any -> resolved to cbc; see [lp] line in each .log)
+
+COMMAND (as recorded in each .log "[main] arguments=" line)
+  aldy genotype -p <REF.bam> -g cyp2d6 -n chr22:42151472-42152258 \
+      -o <SAMPLE>.cyp2d6.aldy -l <SAMPLE>.cyp2d6.log <TEST.bam>
+
+  -p  : diploid reference BAM (Aldy builds the coverage profile on the fly)
+  -n  : CN-neutral region = CYP2D8, GRCh38 coordinates
+  genome: not specified (genome=None); build inferred from BAM header
+  multiple_warn_level=1, simple=False, reference=None
+
+DESIGN
+  Exhaustive single-reference design: every known-diploid sample serves
+  once as the sole reference profile, genotyping all remaining samples.
+  cohort1: 33 refs x 43 test = 1419 runs   (per aligner arm)
+  cohort2: 28 refs x 71 test = 1988 runs   (per aligner arm)
+  4 arms (2 cohorts x 2 aligners), TOTAL 6814 runs, 0 failures
+
+INPUT BAMs
+  BWA-MEM cohort1: bwa_results/HPRC_PGpanel_altaware/{S}/{S}.markdup.bam
+  BWA-MEM cohort2: bwa_results/PG_20250711_altaware/{S}/{S}.markdup.bam
+  DRAGEN  cohort1: dragen_markdup/cohort1/{S}/{S}.bam
+  DRAGEN  cohort2: dragen_markdup/cohort2/{S}/{S}.bam
+  All four sets duplicate-marked with Picard MarkDuplicates 2.27.4
+  (DRAGEN BAMs were produced with enable-duplicate-marking=false and
+   were marked post hoc to match the BWA-MEM preprocessing).
+
+DIPLOID LISTS (identical files to the CyriPanel benchmark)
+  CyriPanel/data/CYP2D6_cohort1_33diploids.csv
+  CyriPanel/data/CYP2D6_cohort2_28diploids.csv
+
+REFERENCE SAMPLES - cohort1 (n=33)
+  HG00673 HG00735 HG00741 HG01071 HG01106 HG01109 HG01175 HG01358
+  HG01361 HG01928 HG01952 HG01978 HG02055 HG02080 HG02109 HG02148
+  HG02257 HG02572 HG02622 HG02630 HG02717 HG02723 HG02818 HG02886
+  HG03098 HG03453 HG03486 HG03492 HG03516 HG03579 NA18906 NA19240
+  NA24385
+
+REFERENCE SAMPLES - cohort2 (n=28)
+  HG00133 HG00232 HG00253 HG00280 HG00350 HG00639 HG01123 HG01167
+  HG01530 HG01884 HG01940 HG01969 HG01975 HG02486 HG02559 HG03017
+  HG03471 HG03654 HG04184 HG04228 NA18522 NA18952 NA18983 NA19043
+  NA20282 NA20752 NA20905 NA21102
+
+OUTPUT NORMALISATION (aldy_norm.py)
+  Aldy major diplotypes reduced to core star alleles before comparison:
+    *36.ALDY -> *36 ;  *4.028 -> *4 ;  +rsNNNNN modifiers dropped
+  Then passed through CyriPanel's own normalize_genotype()/compare_genotype()
+  so both tools are scored identically.
+  Multi-solution calls treated as discordant (same standard as CyriPanel);
+  observed in 0 of 6814 runs.
+
+FULL PER-RUN MANIFEST: manifest_refs.txt
+PER-RUN RESULTS       : aldy_results_long.csv
+Wed Sep  2 23:43:02 CST 2026

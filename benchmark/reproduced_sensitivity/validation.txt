@@ -1,0 +1,12 @@
+SENSITIVITY_ROWS_MATCH: 8
+PER_SAMPLE_RATES: 232
+DISCORDANT_EVALUATIONS: 986
+no_call: 106
+phased_copy_distribution: 430
+unphased_total_copy: 172
+phased_hybrid_status: 270
+unphased_unresolved: 8
+other_unresolved: 0
+FALSE_STAR49_CALLS: 0/15960 gold-non-*49 evaluations
+INPUT_SOURCE_COMMIT: 5d33b820dd2ba8b874f1bbea51f411b5f081856f
+SENSITIVITY_DISPLAY_SHA256: d9a0bca70f9958e9a2fdec83a01ce15da07426fb4b6d34c1c9705a92b7094f88

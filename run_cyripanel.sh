@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# CyriPanel Production Run Script
+# CyriPanel general run wrapper
 # CYP2D6 Genotyper for Targeted Sequencing Panels
 #
 # Usage: 
@@ -13,7 +13,7 @@
 #   bash run_cyripanel.sh --manifest samples.manifest batch001
 #
 
-set -e
+set -euo pipefail
 
 # =============================================================================
 # Configuration
@@ -49,7 +49,7 @@ usage() {
     echo "  $(basename "$0") --manifest samples.txt batch_analysis"
     echo "  $(basename "$0") -o /custom/output /data/sample001.bam"
     echo ""
-    exit 1
+    exit "${1:-1}"
 }
 
 # =============================================================================
@@ -64,22 +64,32 @@ OUTPUT_PREFIX=""
 while [[ $# -gt 0 ]]; do
     case $1 in
         -h|--help)
-            usage
+            usage 0
             ;;
         -o|--outdir)
+            [[ $# -ge 2 && -n "$2" && "$2" != -* ]] || { echo "ERROR: --outdir requires a directory." >&2; exit 2; }
             OUTPUT_DIR="$2"
             shift 2
             ;;
         --manifest)
+            [[ $# -ge 2 && -n "$2" && "$2" != -* ]] || { echo "ERROR: --manifest requires a file." >&2; exit 2; }
+            [[ -z "$MANIFEST_FILE" && -z "$INPUT_BAM" ]] || { echo "ERROR: Specify one BAM or one manifest." >&2; exit 2; }
             MANIFEST_MODE=true
             MANIFEST_FILE="$2"
             shift 2
+            ;;
+        -*)
+            echo "ERROR: Unknown option: $1" >&2
+            exit 2
             ;;
         *)
             if [[ -z "${INPUT_BAM}" ]] && [[ "${MANIFEST_MODE}" == "false" ]]; then
                 INPUT_BAM="$1"
             elif [[ -z "${OUTPUT_PREFIX}" ]]; then
                 OUTPUT_PREFIX="$1"
+            else
+                echo "ERROR: Too many arguments." >&2
+                exit 2
             fi
             shift
             ;;
@@ -112,6 +122,29 @@ else
     fi
 fi
 
+# Preserve BAM symlink paths so adjacent indexes remain selectable.
+for value in "$INPUT_BAM" "$MANIFEST_FILE" "$OUTPUT_DIR" "$OUTPUT_PREFIX"; do
+    [[ "$value" != *$'\n'* && "$value" != *$'\r'* ]] || {
+        echo "ERROR: Newlines are not supported in paths or prefixes." >&2; exit 2;
+    }
+done
+[[ -n "$OUTPUT_PREFIX" && "$OUTPUT_PREFIX" != */* &&
+   "$OUTPUT_PREFIX" != "." && "$OUTPUT_PREFIX" != ".." ]] || {
+    echo "ERROR: Prefix must be a filename, without directory components." >&2; exit 2;
+}
+absolute_path() {
+    case "$1" in
+        /*) printf '%s\n' "$1" ;;
+        *) printf '%s/%s\n' "$PWD" "$1" ;;
+    esac
+}
+OUTPUT_DIR=$(absolute_path "$OUTPUT_DIR")
+if [[ "$MANIFEST_MODE" == "true" ]]; then
+    MANIFEST_FILE=$(absolute_path "$MANIFEST_FILE")
+else
+    INPUT_BAM=$(absolute_path "$INPUT_BAM")
+fi
+
 # Check star_caller.py exists
 if [[ ! -f "${CYRIPANEL_DIR}/star_caller.py" ]]; then
     echo "ERROR: star_caller.py not found in ${CYRIPANEL_DIR}"
@@ -122,7 +155,7 @@ fi
 # Setup
 # =============================================================================
 mkdir -p "${OUTPUT_DIR}"
-LOG_DIR="${CYRIPANEL_DIR}/logs"
+LOG_DIR="${OUTPUT_DIR}/logs"
 mkdir -p "${LOG_DIR}"
 
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
@@ -131,9 +164,9 @@ LOG_FILE="${LOG_DIR}/${OUTPUT_PREFIX}_${TIMESTAMP}.log"
 # Create temporary manifest if single BAM mode
 if [[ "${MANIFEST_MODE}" == "false" ]]; then
     TEMP_MANIFEST=$(mktemp)
-    echo "${INPUT_BAM}" > "${TEMP_MANIFEST}"
-    MANIFEST_FILE="${TEMP_MANIFEST}"
-    trap "rm -f ${TEMP_MANIFEST}" EXIT
+    trap 'rm -f -- "$TEMP_MANIFEST"' EXIT
+    printf '%s\n' "$INPUT_BAM" > "$TEMP_MANIFEST"
+    MANIFEST_FILE="$TEMP_MANIFEST"
 fi
 
 # =============================================================================
@@ -154,7 +187,7 @@ python3 "${CYRIPANEL_DIR}/star_caller.py" \
     --manifest "${MANIFEST_FILE}" \
     --genome 38 \
     --outDir "${OUTPUT_DIR}" \
-    --prefix "${OUTPUT_PREFIX}" \
+    --prefix="${OUTPUT_PREFIX}" \
     2>&1 | tee "${LOG_FILE}"
 
 # =============================================================================

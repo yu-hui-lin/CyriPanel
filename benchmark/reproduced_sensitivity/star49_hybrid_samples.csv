@@ -1,0 +1,7 @@
+arm,sample,gold,all_panel_evaluations,primary_correct,hypothetical_correct
+cohort1,NA24631,*49/*10+*36,90,90,0
+cohort1_dragen,NA24631,*49/*10+*36,90,90,0
+cohort2,HG00597,*49/*10+*36+*36+*83,90,0,0
+cohort2,HG00609,*10+*36/*49,90,90,0
+cohort2_dragen,HG00597,*49/*10+*36+*36+*83,90,0,0
+cohort2_dragen,HG00609,*10+*36/*49,90,90,0

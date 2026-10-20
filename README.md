@@ -2,7 +2,6 @@
 
 CYP2D6 star-allele genotyping from laboratory-developed targeted sequencing panels.
 
-⚠️ **Disclaimer: Research Use Only (RUO)**
 CyriPanel is a computational research tool developed for methodological evaluation of targeted capture sequencing data. It is **not** intended for clinical diagnostics, patient management, or prescribing decisions.
 
 CyriPanel is derived from [Cyrius](https://github.com/Illumina/Cyrius) (Illumina) and
@@ -19,16 +18,41 @@ CYP2D6–CYP2D7 hybrid alleles, and reports a diplotype with a filter status.
 
 **GRCh38 only.**
 
+## Reproducibility example
+
+Start with the [worked example](example/README.md): five assay-matched diploid
+references and two test samples, with frozen observed outputs and verification
+records. Archive installation into a clean code copy was verified with the
+original Conda environment. A subsequent environment rebuilt from
+`environment.yml` reproduced both sample outputs using that restored copy.
+
+This checks reproduction of observed software outputs for two samples; it does
+not establish independent biological accuracy or reproduce the full benchmark.
+The example data archive's public download URL and data-source documentation
+are pending release. Use a checkout containing `example/`; the original
+`v1.0.1` tag predates this example.
+
 ---
 
 ## Requirements
 
-|        |                                                              |
-| ------ | ------------------------------------------------------------ |
-| Python | 3.6.8 (the validated interpreter). Install with `pip install -r requirements.txt`; the exact versions used for the benchmark in the accompanying preprint are in `requirements-validated.txt` |
-| R      | ≥ 4.2 with [CNVPanelizer](https://bioconductor.org/packages/CNVPanelizer/) (validated with v1.30.0, Bioconductor 3.16) |
-| Other  | `samtools`; an aligner (see below)                           |
-| Input  | Coordinate-sorted, duplicate-marked BAM/CRAM aligned to GRCh38 |
+### Tested example environment
+
+| Component | Version or requirement |
+|---|---|
+| Platform | Linux x86_64; Conda and Bash |
+| Python | 3.10.22 |
+| R / CNVPanelizer | R 4.2.3 / CNVPanelizer 1.30.0 |
+| BAM tools | pysam 0.23.0; samtools 1.24; bedtools 2.31.1 |
+| Example input | GRCh38 panel-sliced BAMs with matching BAI indexes |
+
+These versions describe the new reproducibility example. The earlier Python
+dependency records in `requirements*.txt` are retained separately; they do not
+describe this example's environment. Full dependencies are recorded in the
+Conda files linked below.
+
+For other datasets, use coordinate-sorted, duplicate-marked alignments to GRCh38.
+CRAM input also requires the matching reference FASTA.
 
 ### Alignment matters more than usual
 
@@ -40,7 +64,7 @@ copy-number step is then starved of data at exactly the locus of interest.
 Two alignment routes were evaluated in the benchmark:
 
 ```bash
-# ALT-aware BWA-MEM
+# ALT-aware BWA-MEM (used for the published benchmark)
 bwa mem -Y -K 100000000 GRCh38_full_analysis_set_plus_decoy_hla.fa ...
 # the accompanying .alt file must be present beside the reference
 ```
@@ -54,19 +78,47 @@ Duplicates should be marked but **not removed** — capture duplicates carry dep
 
 ## Installation
 
+From the root of a checkout containing `example/`, create a new environment on
+Linux x86_64 using the tested YAML installation workflow:
+
 ```bash
-git clone https://github.com/yu-hui-lin/CyriPanel.git
-cd CyriPanel
-
-# Python dependencies
-pip install -r requirements.txt
-
-# R dependency (pinned to the validated release)
-Rscript -e 'if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager", repos="https://cloud.r-project.org"); BiocManager::install("CNVPanelizer", version="3.16", update=FALSE)'
+bash setup_environment.sh cyripanel-example
+conda activate cyripanel-example
 ```
 
-`setup_environment.sh` automates the same steps into a conda environment and is convenient
-on an HPC where `module load miniconda3` is available.
+The setup script reads [environment.yml](environment.yml). If this environment
+already exists from the tested setup, activate it instead of creating it again.
+To choose a new name, use that name in both commands.
+
+The reconstruction test used the name `cyripanel-rebuild`. Its two-sample run
+matched all 10 primary comparisons and both complete parsed JSON records;
+see the [environment rebuild evidence](example/validation/environment-rebuild/evidence.json).
+It reused the previously restored code and data, with the existing package
+cache available.
+
+Dependency records:
+
+- [environment.example.yml](environment.example.yml): direct dependencies used
+  for the initial environment creation.
+- [Original explicit package list](reproducibility/conda-linux-64.explicit.txt):
+  package builds and URLs from the original environment.
+- [Rebuilt environment package list](example/validation/environment-rebuild/conda-linux-64.explicit.txt):
+  package builds and URLs recorded in the successful rebuild run.
+
+An optional alternative is to recreate the original recorded package builds
+directly from their explicit list. This alternative has not been separately
+tested; use a new environment name:
+
+```bash
+conda create --name cyripanel-explicit \
+  --file reproducibility/conda-linux-64.explicit.txt
+conda activate cyripanel-explicit
+```
+
+Continue with the [data installation and example run](example/README.md).
+The verified analysis entry point is `example/run_example.sh`.
+The general `run_cyripanel.sh` wrapper and site deployment scripts remain
+outside this example's verification.
 
 ---
 
@@ -76,16 +128,16 @@ on an HPC where `module load miniconda3` is available.
 
 A standard 4-column BED (`chrom  start  end  name`) describing your capture targets.
 CyriPanel picks up the single `.bed` file it finds in `data/`; the panel used in the
-benchmark, `PGxProbe_region_hg38.bed`, is included as a reference.
+published work, `PGxProbe_region_hg38.bed`, is included as a reference.
 
 **Your BED must contain three intervals with these exact names**, because the copy-number
 step looks them up by name:
 
-| Name                    | GRCh38 interval             | Purpose                                           |
-| ----------------------- | --------------------------- | ------------------------------------------------- |
-| `CYP2D6plusREP6_hapcn2` | chr22:42,123,192-42,132,032 | CYP2D6 plus REP6                                  |
-| `CYP2D7`                | chr22:42,139,676-42,145,745 | CYP2D7                                            |
-| `D7spacer_hapcn1`       | chr22:42,138,124-42,139,676 | CYP2D7 downstream spacer, used to resolve hybrids |
+| Name | GRCh38 interval | Purpose |
+|---|---|---|
+| `CYP2D6plusREP6_hapcn2` | chr22:42,123,192-42,132,032 | CYP2D6 plus REP6 |
+| `CYP2D7` | chr22:42,139,676-42,145,745 | CYP2D7 |
+| `D7spacer_hapcn1` | chr22:42,138,124-42,139,676 | CYP2D7 downstream spacer, used to resolve hybrids |
 
 A panel that does not capture these regions cannot be genotyped by CyriPanel. If yours
 covers them under different names, rename them in your BED.
@@ -97,7 +149,7 @@ with the *same* wet-lab protocol and processed with the *same* alignment pipelin
 samples you want to genotype. Each needs its `.bai` index.
 
 In the benchmark, concordance did not differ detectably between panels of 5, 10 and 20
-references. Larger panels only lengthened runtime.
+references. Larger panels took longer to run.
 
 ```
 ref_dir/
@@ -151,13 +203,13 @@ raw allele counts.
 
 ### Filter values
 
-| Filter                                         | Meaning                                                      |
-| ---------------------------------------------- | ------------------------------------------------------------ |
-| `PASS`                                         | A single diplotype was assigned                              |
-| `More_than_one_possible_genotype`              | Several diplotypes explain the data equally well; all are listed, separated by `;` |
-| `Not_assigned_to_haplotypes`                   | Alleles were identified but could not be split into two haplotypes |
-| `CNV_Group_Not_Accepted`                       | No consistent structural configuration could be inferred     |
-| `Invalid_Total_CN` / `CN_Determination_Failed` | The copy-number step did not produce a usable estimate       |
+| Filter | Meaning |
+|---|---|
+| `PASS` | A single diplotype was assigned |
+| `More_than_one_possible_genotype` | Several diplotypes explain the data equally well; all are listed, separated by `;` |
+| `Not_assigned_to_haplotypes` | Alleles were identified but could not be split into two haplotypes |
+| `CNV_Group_Not_Accepted` | No consistent structural configuration could be inferred |
+| `Invalid_Total_CN` / `CN_Determination_Failed` | The copy-number step did not produce a usable estimate |
 
 Treat anything other than `PASS` as requiring review or orthogonal testing. A `PASS`
 status means only that the call met the implemented acceptance rules. In the benchmark,
@@ -191,11 +243,11 @@ CyriPanel was evaluated on 116 Human Pangenome Reference Consortium cell lines s
 on a laboratory-developed pharmacogenomic panel, using assembly-derived diplotypes as the
 reference standard, with reference panels of 5, 10 and 20 samples drawn at random over 30
 iterations each. Details, including the comparison with Aldy 4, are in the accompanying
-preprint.
+manuscript.
 
 The reference-standard diplotypes, the per-evaluation results of both callers and the
 analysis scripts are in [`benchmark/`](benchmark/README.md), which lists the script
-behind each table of the preprint.
+behind each table of the manuscript.
 
 ### Known limitations
 
@@ -210,13 +262,27 @@ behind each table of the preprint.
 
 ---
 
+## Running on an HPC cluster
+
+Run full data installation, BAM checksum verification, and analysis in an
+allocated compute job. Activate the Conda environment inside the job and follow
+the [example instructions](example/README.md) from the repository root.
+Use the account, partition, and resource allocation required by your cluster.
+
+The general `deployment/submit_cyripanel.slurm` template inherits the Conda
+environment activated before submission. Supply your cluster's resource options
+to `sbatch`, followed by the script, an absolute repository path, and the
+arguments for `run_cyripanel.sh`. Its default scheduler logs are written in the
+submission directory. This template is separate from the verified example.
+
+Scripts under `benchmark/slurm/` retain site-specific configuration and need
+separate updates before external use.
+
+---
+
 ## Citation
 
-If you use CyriPanel, please cite the accompanying preprint:
-
-- Lin Y-H, Chang T-Y, Huang K-T, et al. CyriPanel for *CYP2D6* genotyping from targeted
-  capture panels using assay-matched diploid references. *bioRxiv* 2026.
-  doi: (added when the preprint is posted)
+Manuscript and software-release citation details will be added when available.
 
 CyriPanel builds on:
 
@@ -228,6 +294,8 @@ CyriPanel builds on:
   applications. Bioconductor.
 
 ## License
+
+Copyright © Yu-Hui Lin (林育慧).
 
 CyriPanel is distributed under the GNU General Public License, version 3 or later. See
 [`LICENSE`](LICENSE). Source files derived from Cyrius and BCyrius retain their original

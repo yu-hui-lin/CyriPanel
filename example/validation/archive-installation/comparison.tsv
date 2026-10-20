@@ -1,0 +1,11 @@
+Sample	Metric	Expected	Observed	Match
+HG00639	Genotype	*1/*1	*1/*1	True
+HG00639	Filter	PASS	PASS	True
+HG00639	CYP2D6plusREP6_hapcn2	1.02	1.02	True
+HG00639	CYP2D7	1.05	1.05	True
+HG00639	D7spacer_hapcn1	1.03	1.03	True
+HG02129	Genotype	*1/*36+*10	*1/*36+*10	True
+HG02129	Filter	PASS	PASS	True
+HG02129	CYP2D6plusREP6_hapcn2	1.34	1.34	True
+HG02129	CYP2D7	1.01	1.01	True
+HG02129	D7spacer_hapcn1	1.43	1.43	True

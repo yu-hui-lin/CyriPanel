@@ -1,0 +1,37 @@
+{
+  "complete_parsed_json_records_matched": 2,
+  "evidence_created_utc": "2026-10-19T11:48:49.034527+00:00",
+  "input_checksum_paths_relative_to": "../data",
+  "notes": [
+    "Runner and expected-list hashes were captured after the run; they were not recorded by the job.",
+    "Results were re-compared against the current frozen expectations at evidence capture.",
+    "MeanRatio comparison uses stored report precision.",
+    "This is not independent biological truth, full-cohort, or fresh-environment validation."
+  ],
+  "observed_output_sha256": {
+    "cnv_reports/HG00639_CNV_exon_level_report.csv": "94a5cafc7d26142025729d76555ee390e9c203748498444559c6e1ee3ab72490",
+    "cnv_reports/HG02129_CNV_exon_level_report.csv": "88a1370cf5d60c169be74fc76a93505a39feef358c59f41a3bb3bdbf155f1c6d",
+    "cyripanel.json": "b63a774cf9c8305ceef986091298b877cf492e6136098b50af9e3f5640ea72f9",
+    "cyripanel.tsv": "8d699878b0b69686e79865645781583822c564a5e97ca4cd45f3f7b5cdf19bed"
+  },
+  "primary_metrics_matched": 10,
+  "repository_file_hashes_at_evidence_capture": {
+    "example/expected/SHA256SUMS": "2fb530e5def994eb1f9f80a08894ff1a7395d8a70ee43ec6269e7b584c5a22c3",
+    "example/manifest.tsv": "8b59d4b2fd2711a2c35335ba57b61e32da2d05131d168694d8efbc00c3edf98f",
+    "example/run_example.py": "4d32d28f6a0ad161b189beacb8f310f628fbce1726318f9c984f0bcc6b4f91dc",
+    "example/run_example.sh": "001e5aa62fb0a1d4396b672880624501437897dc7f20dde7b937d1956b1dd8d8"
+  },
+  "runtime_checksum_paths_relative_to": "../..",
+  "sample_roles": {
+    "HG00133": "reference",
+    "HG00280": "reference",
+    "HG00639": "test",
+    "HG01530": "reference",
+    "HG02129": "test",
+    "NA18522": "reference",
+    "NA19043": "reference"
+  },
+  "schema_version": 1,
+  "scope": "Two-sample reproduction of frozen observed outputs",
+  "source_run_id": "2267360"
+}

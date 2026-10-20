@@ -47,3 +47,14 @@
 # Uncomment and configure if using Git LFS
 # *.bam filter=lfs diff=lfs merge=lfs -text
 # *.cram filter=lfs diff=lfs merge=lfs -text
+
+example/data/** -text whitespace=cr-at-eol
+example/expected/** -text whitespace=cr-at-eol
+example/validation/** -text whitespace=cr-at-eol
+benchmark/reproduced_tables/** -text whitespace=cr-at-eol
+benchmark/reproduced_panel_tests/** -text whitespace=cr-at-eol
+benchmark/reproduced_sensitivity/** -text whitespace=cr-at-eol
+reproducibility/** -text whitespace=cr-at-eol
+reproducibility/R-sessionInfo.txt -text whitespace=cr-at-eol,-blank-at-eol
+
+benchmark/legacy_main_7a1b0ea/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof

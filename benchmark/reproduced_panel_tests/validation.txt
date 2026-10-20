@@ -1,0 +1,17 @@
+NumPy: 1.26.4
+SciPy: 1.15.2
+Python: 3.10.22
+Analysis script SHA256: 6b3481528c111a07016532f097b7e5cd09cd64f979c02e29bdaab676732c09a4
+Scoring helper SHA256: 8f51f22ad5b397bb62c92424784dd4ea8e7a86e5a31cae4f5d61261fc62a0d04
+Scope: new reconstruction from the archived CSV, not proof of the original HPC execution.
+Candidate-inclusive scoring; no-calls retained; common samples across all three panel sizes.
+Exact Fraction differences converted to float preserve true ties for Wilcoxon.
+Wilcoxon uses asymptotic p-values, wilcox zeros, two-sided, no continuity correction.
+Holm correction: three panel pairs per arm and minimum-evaluation setting.
+All-zero Wilcoxon: statistic undefined, p=1 by convention; all-tied Friedman: undefined.
+Floating-rate subtraction previously broke a true tie for cohort2 BWA 5/10.
+Correcting that tie changes its raw p from 0.345231 to 0.278517,
+and Holm p from 1.000000 to 0.835551, for both minimum-evaluation settings.
+The manuscript's rounded minimum p-value summaries remain consistent.
+With minimum 5 evaluations, HG01530 (24/17/4 evaluations) is excluded in both cohort2 arms.
+All 8 arm/settings and 32 test records match the independent reconstruction.

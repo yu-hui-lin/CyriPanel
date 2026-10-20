@@ -1,0 +1,9 @@
+aligner,stratum,samples,cyri_candidate_inclusive_pct,cyri_single_candidate_pct,cyri_star49_recode_pct,aldy_retained_major_pct
+BWA-MEM,All samples,116,94.7126,91.2644,92.9885,88.7139
+BWA-MEM,No structural variation,61,98.3607,91.8033,98.3607,96.6701
+BWA-MEM,Copy-number variation only,27,92.5926,92.5926,92.5926,92.4804
+BWA-MEM,Hybrid,28,88.8095,88.8095,81.6667,67.7489
+DRAGEN,All samples,116,94.5402,91.0920,92.8161,92.2230
+DRAGEN,No structural variation,61,98.3607,91.8033,98.3607,99.8975
+DRAGEN,Copy-number variation only,27,92.0988,92.0988,92.0988,96.2963
+DRAGEN,Hybrid,28,88.5714,88.5714,81.4286,71.5754

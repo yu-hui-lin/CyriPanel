@@ -1,225 +1,62 @@
-#!/bin/bash
-#
-# CyriPanel Environment Setup Script for NCHC
-#
-# This script creates the conda environment and installs all dependencies
-# for running CyriPanel on NCHC.
-#
-# Usage: bash setup_environment.sh
-#
+#!/usr/bin/env bash
+# Create the Linux example environment from the recorded dependency file.
 
-set -e
-
-# Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-log_info() {
-    echo -e "${GREEN}[INFO]${NC} $1"
-}
-
-log_warn() {
-    echo -e "${YELLOW}[WARN]${NC} $1"
-}
-
-log_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ENV_NAME="cyripanel"
-
-echo "=========================================="
-echo "CyriPanel Environment Setup"
-echo "=========================================="
-echo ""
-
-# =============================================================================
-# Step 1: Load Miniconda
-# =============================================================================
-log_info "Step 1: Loading Miniconda module..."
-
-# Try different module names commonly used on NCHC
-if module load miniconda3 2>/dev/null; then
-    log_info "Loaded miniconda3 module"
-elif module load anaconda3 2>/dev/null; then
-    log_info "Loaded anaconda3 module"
-elif module load conda 2>/dev/null; then
-    log_info "Loaded conda module"
-else
-    log_warn "Could not load conda module. Checking if conda is available..."
-    if ! command -v conda &> /dev/null; then
-        log_error "Conda not found. Please install Miniconda or load the appropriate module."
-        exit 1
-    fi
+if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+    printf '%s\n' "Run this script with bash; do not source it." >&2
+    return 2
 fi
+set -euo pipefail
 
-# Initialize conda for this shell
-eval "$(conda shell.bash hook)"
+usage() {
+    cat <<'EOF'
+Usage: bash setup_environment.sh [NEW_ENV_NAME]
 
-# =============================================================================
-# Step 2: Create Conda Environment
-# =============================================================================
-log_info "Step 2: Creating conda environment '${ENV_NAME}'..."
+Create a Linux x86_64 environment from environment.yml.
+Default name: cyripanel-example
+Use a different name when that environment already exists.
 
-# Check if environment already exists
-if conda env list | grep -q "^${ENV_NAME} "; then
-    log_warn "Environment '${ENV_NAME}' already exists."
-    read -p "Do you want to remove and recreate it? (y/N): " REPLY
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        conda env remove -n ${ENV_NAME} -y
-    else
-        log_info "Keeping existing environment. Skipping creation."
-        conda activate ${ENV_NAME}
-    fi
-fi
+Example:
+  bash setup_environment.sh cyripanel-rebuild
+  conda activate cyripanel-rebuild
 
-if ! conda env list | grep -q "^${ENV_NAME} "; then
-    # The published results were produced on Python 3.6.8 (see
-    # requirements-validated.txt). 3.6 is end-of-life and has no current
-    # wheels, so this script builds a supported interpreter instead; the
-    # bounds in requirements.txt are what keep the dependency set compatible.
-    conda create -n ${ENV_NAME} python=3.10 -y
-fi
-
-conda activate ${ENV_NAME}
-log_info "Activated environment: ${ENV_NAME}"
-
-# =============================================================================
-# Step 3: Install Python Dependencies
-# =============================================================================
-log_info "Step 3: Installing Python dependencies..."
-
-pip install --upgrade pip
-pip install -r "${SCRIPT_DIR}/requirements.txt"
-
-log_info "Python dependencies installed successfully"
-
-# Verify Python packages
-log_info "Verifying Python packages..."
-python3 -c "
-import numpy as np
-import scipy
-import pysam
-import statsmodels
-import pandas as pd
-print(f'  numpy:       {np.__version__}')
-print(f'  scipy:       {scipy.__version__}')
-print(f'  pysam:       {pysam.__version__}')
-print(f'  statsmodels: {statsmodels.__version__}')
-print(f'  pandas:      {pd.__version__}')
-"
-
-# =============================================================================
-# Step 4: Install R and CNVPanelizer
-# =============================================================================
-log_info "Step 4: Installing R and CNVPanelizer..."
-
-# Install R through conda
-conda install -c conda-forge r-base=4.2 -y
-
-log_info "Installing R packages (this may take several minutes)..."
-
-# Set R library path for user packages
-R_LIB_PATH="${HOME}/R/library"
-mkdir -p "${R_LIB_PATH}"
-
-# Install BiocManager and CNVPanelizer
-Rscript -e "
-# Set library path
-.libPaths(c('${R_LIB_PATH}', .libPaths()))
-
-# Install BiocManager
-if (!requireNamespace('BiocManager', quietly = TRUE)) {
-    install.packages('BiocManager', repos='https://cloud.r-project.org', lib='${R_LIB_PATH}')
-}
-
-# Install CNVPanelizer
-BiocManager::install('CNVPanelizer', version='3.16', update=FALSE, ask=FALSE, lib='${R_LIB_PATH}')
-
-# Verify installation
-library(CNVPanelizer)
-cat('CNVPanelizer installed successfully!\n')
-"
-
-log_info "R and CNVPanelizer installed successfully"
-
-# =============================================================================
-# Step 5: Verify Complete Installation
-# =============================================================================
-log_info "Step 5: Verifying complete installation..."
-
-echo ""
-echo "=========================================="
-echo "Installation Verification"
-echo "=========================================="
-
-# Check Python
-echo ""
-echo "Python Environment:"
-which python3
-python3 --version
-
-# Check R
-echo ""
-echo "R Environment:"
-which Rscript
-Rscript --version
-
-# Check CNVPanelizer
-echo ""
-echo "CNVPanelizer Check:"
-Rscript -e "library(CNVPanelizer); cat('CNVPanelizer version:', as.character(packageVersion('CNVPanelizer')), '\n')"
-
-# =============================================================================
-# Create activation script
-# =============================================================================
-ACTIVATE_SCRIPT="${SCRIPT_DIR}/activate_cyripanel.sh"
-cat > "${ACTIVATE_SCRIPT}" << 'EOF'
-#!/bin/bash
-# Activate CyriPanel environment
-# Usage: source activate_cyripanel.sh
-
-# Load conda module (adjust as needed for your NCHC setup)
-module load miniconda3 2>/dev/null || module load anaconda3 2>/dev/null || module load conda 2>/dev/null
-
-# Initialize conda
-eval "$(conda shell.bash hook)"
-
-# Activate environment
-conda activate cyripanel
-
-# Set R library path
-export R_LIBS_USER="${HOME}/R/library"
-
-echo "CyriPanel environment activated!"
-echo "Python: $(which python3)"
-echo "R: $(which Rscript)"
+For the recorded package builds, see the explicit-file instructions
+in README.md. This script does not activate the parent shell.
 EOF
-chmod +x "${ACTIVATE_SCRIPT}"
+}
 
-# =============================================================================
-# Summary
-# =============================================================================
-echo ""
-echo "=========================================="
-echo -e "${GREEN}Installation Complete!${NC}"
-echo "=========================================="
-echo ""
-echo "To use CyriPanel in future sessions:"
-echo ""
-echo "  1. Source the activation script:"
-echo "     source ${ACTIVATE_SCRIPT}"
-echo ""
-echo "  2. Or manually activate:"
-echo "     module load miniconda3"
-echo "     conda activate ${ENV_NAME}"
-echo ""
-echo "  3. Run CyriPanel:"
-echo "     bash run_cyripanel.sh <input.bam>"
-echo ""
-echo "  4. Run test to verify installation:"
-echo "     bash run_test_HG02129.sh"
-echo ""
+if [[ $# -eq 1 && ( "$1" == "--help" || "$1" == "-h" ) ]]; then
+    usage
+    exit 0
+fi
+if [[ $# -gt 1 ]]; then
+    usage >&2
+    exit 2
+fi
+env_name="${1:-cyripanel-example}"
+if [[ ! "$env_name" =~ ^[A-Za-z][A-Za-z0-9_-]*$ ||
+      "$env_name" == "base" || "$env_name" == "root" ]]; then
+    printf '%s\n' "ERROR: Choose a new environment name using letters, digits, _ or -." >&2
+    exit 2
+fi
+if [[ "$(uname -s)" != "Linux" || "$(uname -m)" != "x86_64" ]]; then
+    printf '%s\n' "ERROR: This environment specification targets Linux x86_64." >&2
+    exit 1
+fi
+if ! command -v conda >/dev/null 2>&1; then
+    printf '%s\n' "ERROR: Make Conda available before running this script." >&2
+    exit 1
+fi
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+spec="$script_dir/environment.yml"
+if [[ ! -r "$spec" ]]; then
+    printf '%s\n' "ERROR: environment.yml is missing or unreadable." >&2
+    exit 1
+fi
+
+# Do not pass --yes: Conda 24.7.1 env create can remove an existing
+# environment when that option is used.
+CONDA_ALWAYS_YES=false CONDA_CHANNEL_PRIORITY=strict CONDA_SUBDIR=linux-64 \
+    conda env create --solver libmamba --no-default-packages \
+    --name "$env_name" --file "$spec"
+
+printf 'Environment created. Activate it with: conda activate %s\n' "$env_name"

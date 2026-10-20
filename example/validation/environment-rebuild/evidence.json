@@ -1,0 +1,52 @@
+{
+  "complete_parsed_json_records_matched": 2,
+  "environment_name": "cyripanel-rebuild",
+  "evidence_created_utc": "2026-10-20T06:34:46.068988+00:00",
+  "explicit_package_count": 237,
+  "input_manifest": {
+    "path": "../input-SHA256SUMS",
+    "sha256": "2d86553156ae27aecf1a27bb32a183914e25accc5997cada515db9e426ce3750"
+  },
+  "notes": [
+    "A new Conda environment was created from environment.yml with setup_environment.sh; the existing package cache was available.",
+    "Environment YAML and setup-script snapshots were captured after creation, not at creation time.",
+    "The explicit manifest records installed package builds; it was not the input used to create this environment.",
+    "The previously restored code and data were reused; this job did not download GitHub/Zenodo assets or reinstall the archive.",
+    "The job verified 14 input checksums; BAMs were not rehashed during evidence capture.",
+    "Outputs were re-compared at capture; MeanRatio comparison uses stored report precision.",
+    "This does not establish independent biological truth or full-cohort reproducibility."
+  ],
+  "observed_output_sha256": {
+    "cnv_reports/HG00639_CNV_exon_level_report.csv": "94a5cafc7d26142025729d76555ee390e9c203748498444559c6e1ee3ab72490",
+    "cnv_reports/HG02129_CNV_exon_level_report.csv": "88a1370cf5d60c169be74fc76a93505a39feef358c59f41a3bb3bdbf155f1c6d",
+    "cyripanel.json": "b63a774cf9c8305ceef986091298b877cf492e6136098b50af9e3f5640ea72f9",
+    "cyripanel.tsv": "8d699878b0b69686e79865645781583822c564a5e97ca4cd45f3f7b5cdf19bed"
+  },
+  "post_creation_source_sha256": {
+    "environment.yml": "daf0823d517c0e2b8aed14f3638459354212e7d99258835b1a06edaa54f4ada2",
+    "setup_environment.sh": "a1feafbb6f412bd9ee5245f48a69b48979ebe2ff9b48950e50eb1f9bd3fc50a1"
+  },
+  "primary_metrics_matched": 10,
+  "prior_archive_installation": {
+    "path": "../archive-installation/evidence.json",
+    "sha256": "369d2490480b0fdc832216cd61788ba364939a8c5b422a9abd4402255b16d4ee"
+  },
+  "runtime_manifest": {
+    "path": "../source-sha256.json",
+    "sha256": "9f3e8eda1ae5e9267c327f5b06349795bacd4779a98604f225676034ec4d8cd7"
+  },
+  "sample_roles": {
+    "HG00133": "reference",
+    "HG00280": "reference",
+    "HG00639": "test",
+    "HG01530": "reference",
+    "HG02129": "test",
+    "NA18522": "reference",
+    "NA19043": "reference"
+  },
+  "scheduler_stderr_empty": true,
+  "schema_version": 1,
+  "scope": "Rebuilt Conda environment and two-sample observed-output reproduction",
+  "source_job_id": "2276876",
+  "tested_runner_sha256": "4d32d28f6a0ad161b189beacb8f310f628fbce1726318f9c984f0bcc6b4f91dc"
+}

@@ -1,0 +1,23 @@
+{
+  "archive": "cyripanel-example-data.tar.gz",
+  "archive_sha256": "194110431cc3244b533d151563ba1e62b2da71435d3bfc0a4a3d34b7581cacf6",
+  "archive_bytes": 2691360951,
+  "regular_file_count": 24,
+  "bam_count": 7,
+  "index_count": 7,
+  "header_count": 7,
+  "symlink_member_count": 0,
+  "member_checksums_passed": true,
+  "gzip_integrity_passed": true,
+  "member_paths_relative_to": "example/",
+  "embedded_checksum_paths_relative_to": "example/data/",
+  "sample_roles": {
+    "NA18522": "reference",
+    "HG00280": "reference",
+    "HG00133": "reference",
+    "NA19043": "reference",
+    "HG01530": "reference",
+    "HG00639": "test",
+    "HG02129": "test"
+  }
+}
