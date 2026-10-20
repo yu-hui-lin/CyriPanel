@@ -227,3 +227,11 @@ iter_*/
 # manuscript's tables can be regenerated without re-running anything. This
 # overrides the blanket *.tsv rule above.
 !benchmark/published_results/*.tsv
+
+# Local working data, not part of the release
+test_data/
+ref_dir/*.bam
+ref_dir/*.bai
+ref_dir/*.md5sum
+timing_rusage.txt
+patch_d7_contamination_filter.py

@@ -2,9 +2,11 @@
 
 CYP2D6 star-allele genotyping from laboratory-developed targeted sequencing panels.
 
+CyriPanel is a computational research tool developed for methodological evaluation of targeted capture sequencing data. It is **not** intended for clinical diagnostics, patient management, or prescribing decisions.
+
 CyriPanel is derived from [Cyrius](https://github.com/Illumina/Cyrius) (Illumina) and
 incorporates the updated star-allele definitions of
-[BCyrius](https://github.com/Halman-Lab/BCyrius). It keeps Cyrius's paralogue-aware
+[BCyrius](https://gitlab.com/andreassh/bcyrius). It keeps Cyrius's paralogue-aware
 variant calling and star-allele matching, but replaces the copy-number step: instead of a
 Gaussian mixture model fitted to whole-genome coverage, copy number is estimated with
 [CNVPanelizer](https://bioconductor.org/packages/CNVPanelizer/) against a small cohort of
@@ -59,7 +61,7 @@ mapping quality 0. With a plain BWA-MEM alignment, **80–90 % of reads across t
 locus carry MAPQ 0**, and because CNVPanelizer counts only reads at MAPQ ≥ 20 the
 copy-number step is then starved of data at exactly the locus of interest.
 
-Two alignment routes are validated:
+Two alignment routes were evaluated in the benchmark:
 
 ```bash
 # ALT-aware BWA-MEM (used for the published benchmark)
@@ -68,7 +70,7 @@ bwa mem -Y -K 100000000 GRCh38_full_analysis_set_plus_decoy_hla.fa ...
 ```
 
 or **Illumina DRAGEN**, which retains > 85 % of reads at MAPQ ≥ 20 natively and needs no
-ALT-aware workaround. DRAGEN is what the NTUH clinical service uses.
+ALT-aware workaround.
 
 Duplicates should be marked but **not removed** — capture duplicates carry depth signal.
 
@@ -146,8 +148,8 @@ Between 5 and 20 samples that are **CYP2D6 diploid with no structural variant**,
 with the *same* wet-lab protocol and processed with the *same* alignment pipeline as the
 samples you want to genotype. Each needs its `.bai` index.
 
-Five is sufficient: performance was equivalent at 5, 10 and 20 in the published evaluation,
-and the NTUH clinical service runs with five.
+In the benchmark, concordance did not differ detectably between panels of 5, 10 and 20
+references. Larger panels took longer to run.
 
 ```
 ref_dir/
@@ -209,7 +211,10 @@ raw allele counts.
 | `CNV_Group_Not_Accepted` | No consistent structural configuration could be inferred |
 | `Invalid_Total_CN` / `CN_Determination_Failed` | The copy-number step did not produce a usable estimate |
 
-Treat anything other than `PASS` as requiring review or orthogonal testing.
+Treat anything other than `PASS` as requiring review or orthogonal testing. A `PASS`
+status means only that the call met the implemented acceptance rules. In the benchmark,
+one sample received `PASS` in every evaluation although most of its calls missed one
+`*36` copy.
 
 ---
 
@@ -232,13 +237,17 @@ Treat anything other than `PASS` as requiring review or orthogonal testing.
 
 ---
 
-## Validation
+## Benchmark
 
-CyriPanel was evaluated on 116 Human Pangenome Reference Consortium samples sequenced on a
-laboratory-developed pharmacogenomic panel, using assembly-derived diplotypes as the
+CyriPanel was evaluated on 116 Human Pangenome Reference Consortium cell lines sequenced
+on a laboratory-developed pharmacogenomic panel, using assembly-derived diplotypes as the
 reference standard, with reference panels of 5, 10 and 20 samples drawn at random over 30
 iterations each. Details, including the comparison with Aldy 4, are in the accompanying
-publication; the evaluation framework will be deposited alongside it.
+manuscript.
+
+The reference-standard diplotypes, the per-evaluation results of both callers and the
+analysis scripts are in [`benchmark/`](benchmark/README.md), which lists the script
+behind each table of the manuscript.
 
 ### Known limitations
 
@@ -273,7 +282,7 @@ separate updates before external use.
 
 ## Citation
 
-*(publication details to follow)*
+Manuscript and software-release citation details will be added when available.
 
 CyriPanel builds on:
 
@@ -288,7 +297,10 @@ CyriPanel builds on:
 
 Copyright © Yu-Hui Lin (林育慧).
 
-GNU General Public License v3.0, inherited from Cyrius. See `LICENSE`.
+CyriPanel is distributed under the GNU General Public License, version 3 or later. See
+[`LICENSE`](LICENSE). Source files derived from Cyrius and BCyrius retain their original
+copyright notices. BCyrius is distributed under the Apache License 2.0, and a copy of that
+license is in [`LICENSE-APACHE.txt`](LICENSE-APACHE.txt).
 
 ## Contact
 

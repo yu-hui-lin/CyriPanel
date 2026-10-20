@@ -1,0 +1,33 @@
+{
+  "title": "CyriPanel: CYP2D6 genotyping from targeted capture panels",
+  "upload_type": "software",
+  "license": "gpl-3.0-or-later",
+  "creators": [
+    {
+      "name": "Lin, Yu-Hui",
+      "affiliation": "National Taiwan University Hospital"
+    }
+  ],
+  "description": "<p>CyriPanel genotypes <i>CYP2D6</i> star alleles from targeted capture sequencing. It adapts the paralog-aware framework of Cyrius and the BCyrius allele table, and estimates copy number against diploid reference samples sequenced with the same assay.</p><p>This release supports the manuscript <i>CyriPanel for CYP2D6 Genotyping from Targeted Capture Panels Using Assay-Matched Diploid References</i>. The benchmark/ directory holds the reference-standard diplotypes, the per-evaluation results for CyriPanel and Aldy 4, and the analysis scripts. benchmark/README.md lists the script or data source behind each table.</p><p>CyriPanel is research software. The benchmark measured analytical concordance in reference cell lines and is not a clinical validation.</p>",
+  "keywords": [
+    "CYP2D6",
+    "pharmacogenomics",
+    "star allele",
+    "targeted sequencing",
+    "copy number",
+    "hybrid allele"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Illumina/Cyrius",
+      "relation": "isDerivedFrom",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://gitlab.com/andreassh/bcyrius",
+      "relation": "isDerivedFrom",
+      "resource_type": "software"
+    }
+  ],
+  "notes": "Relative to v1.0.1, this version adds a tested Conda environment, an executable two-sample example, archive installation and three benchmark reconstruction scripts. The R wrapper imports all 784 BED intervals with skip=0 and uses preinstalled CNVPanelizer 1.30.0. The original v1.0.1 evaluation CSV bytes are retained for the revised reconstruction. The earlier main benchmark tree is preserved in benchmark/legacy_main_7a1b0ea. Documentation, license attribution and a generic Slurm template are included. The full 116-sample BAM benchmark was not rerun."
+}

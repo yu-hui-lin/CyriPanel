@@ -123,6 +123,37 @@ unphased evaluations of HG00597. The classifier treats *5 as zero copies and col
 coarse categories do not establish biological equivalence or the cause of an error;
 the eight unresolved calls prevent attributing all discordance to structure.
 
+## Input versions and historical analyses
+
+The input CSVs retain their original v1.0.1 bytes, including historical `gold_v1`
+and `comparison_v1` columns. The three reconstruction scripts use the released
+reference-standard files in `data/` and check `gold_v2` against them. Historical
+v1 fields are not used for scoring. The archived `comparison_v2` labels describe single-candidate
+scoring. Primary candidate-inclusive results are recalculated from the recorded calls.
+
+The benchmark tree from main commit `7a1b0ea9f502838df5a4796b9e7bbcac79f6f079`
+is preserved in [legacy_main_7a1b0ea](legacy_main_7a1b0ea/PROVENANCE.md).
+That snapshot uses a different CSV column layout. The three entry points above
+supersede its panel-size and sensitivity analyses for the revised manuscript.
+Keep each set of historical scripts with its matching inputs.
+Use the commands above for the current reconstruction. Historical instructions
+describe their original directory layout and environment.
+
+Historical supporting scripts are listed below. They were not revalidated after
+relocation and may require original BAMs, accounting records or adjusted paths.
+
+| Supporting analysis | Historical scripts |
+| --- | --- |
+| Table 2 and Supplemental Table S2 | [capture_qc_metrics.sh](legacy_main_7a1b0ea/capture_qc_metrics.sh), [inspect_seq_qc.py](legacy_main_7a1b0ea/inspect_seq_qc.py) |
+| Supplemental Tables S3 and S4 | [supplemental_s3_s4.py](legacy_main_7a1b0ea/supplemental_s3_s4.py) |
+| Supplemental Table S5 | [count_spanning_pairs.sh](legacy_main_7a1b0ea/count_spanning_pairs.sh) |
+| Supplemental Table S7 memory columns | [mem_audit.py](legacy_main_7a1b0ea/mem_audit.py) |
+| File-cache control | [cache_test.sh](legacy_main_7a1b0ea/cache_test.sh) |
+
+The historical snapshot has no standalone script for Supplemental Table S6 or
+the runtime columns of Supplemental Table S7. Those analyses require the original
+per-iteration outputs and Slurm accounting records.
+
 ## Relationship to BAM processing and historical scripts
 
 The [executable example](../example/README.md) separately validates five reference

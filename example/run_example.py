@@ -74,8 +74,8 @@ def preflight():
     for item in ("star_caller.py", "caller", "depth_calling", "data"):
         require((CODE / item).exists(), "Missing runtime resource: " + item)
     require(sha256(CODE / "depth_calling/run_CNVPanelizer.R") ==
-            "8a864517cb066fcd45af6c21ae2c9a187fc57a8cb270ebbe1a097f2a27a308b4",
-            "R wrapper differs from the tested skip=0 version")
+            "d41cf4e1133fb4849020d8d83443bbc24b39ff6f24497be6c0d5b683b7412597",
+            "R wrapper differs from the reviewed skip=0 version")
     bed = CODE / "data/PGxProbe_region_hg38.bed"
     require(list((CODE / "data").glob("*.bed")) == [bed], "Expected exactly one panel BED")
     require(sha256(bed) == "e7912fc4e9066a534189449afdea5697c1e5f2c98da5c33e29ec663581803f61",

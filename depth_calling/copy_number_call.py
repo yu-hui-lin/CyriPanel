@@ -58,7 +58,7 @@ def call_reg1_cn(full_cn, count_reg1, count_reg2, min_read=0):
     # Original: Simple check "if full_cn == 1 and count_reg1 > min_read: return [1]"
     # Problem: In targeted panels with variable coverage, low-level noise can be miscalled as variants.
     # Solution: (1) Require >20 reads for fraction analysis, (2) Detect heterozygosity conflict (0.40-0.60 fraction contradicts CN=1 assumption -> return None),
-    # (3) Require ≥85% or ≤15% fraction for confident calls, preventing false positives from noise while maintaining sensitivity for true variants. ---
+    # (3) Require ≥50% (effectively ≥60%, since 0.40-0.60 is rejected above) or ≤15% fraction for confident calls, preventing false positives from noise while maintaining sensitivity for true variants. ---
     total_reads_at_site = count_reg1 + count_reg2
 
     if full_cn == 1:

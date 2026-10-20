@@ -100,9 +100,8 @@ tryCatch({
   message(paste("Extracted", length(uniqueAmpliconNames_for_functions), "unique identifiers to be used for amplicons by CNVPanelizer."))
   
   # --- STEP 3: Load reference and sample BAM files. ---
-  # The published evaluation found reference panels of 5, 10 and 20 samples
-  # equivalent for genotype concordance, and the clinical deployment runs with
-  # five. Warn only below that floor; the previous check demanded exactly 20.
+  # In the benchmark, panels of 5, 10 and 20 references showed no detectable
+  # difference in concordance. Warn below five references.
   # Fewer than five may reduce copy-number stability.
   referenceFilenames <- list.files(path = referenceDirectory, pattern = "\\.bam$", full.names = TRUE)
   minimumReferenceCount <- 5
