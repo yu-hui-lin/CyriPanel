@@ -1,0 +1,9 @@
+Aligner,Samples,n,CyriPanel (%),Aldy 4 (%)
+BWA-MEM,All samples,116,94.7,88.7
+BWA-MEM,No structural variation,61,98.4,96.7
+BWA-MEM,Copy-number variation only,27,92.6,92.5
+BWA-MEM,Hybrid,28,88.8,67.7
+DRAGEN,All samples,116,94.5,92.2
+DRAGEN,No structural variation,61,98.4,99.9
+DRAGEN,Copy-number variation only,27,92.1,96.3
+DRAGEN,Hybrid,28,88.6,71.6

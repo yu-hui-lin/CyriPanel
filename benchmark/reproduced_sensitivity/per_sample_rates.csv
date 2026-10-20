@@ -1,0 +1,233 @@
+arm,sample,stratum,cyri_evaluations,cyri_primary_correct,cyri_single_correct,cyri_star49_recode_correct,aldy_evaluations,aldy_correct,primary_fraction,single_fraction,star49_recode_fraction,aldy_fraction
+cohort1,HG00438,Hybrid,30,30,30,30,33,0,1,1,1,0
+cohort1,HG00621,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1,HG00673,No structural variation,28,28,28,28,32,32,1,1,1,1
+cohort1,HG00733,Hybrid,30,30,30,30,33,33,1,1,1,1
+cohort1,HG00735,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1,HG00741,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1,HG01071,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1,HG01106,No structural variation,23,23,23,23,32,32,1,1,1,1
+cohort1,HG01109,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1,HG01175,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1,HG01243,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1,HG01258,Hybrid,30,30,30,30,33,0,1,1,1,0
+cohort1,HG01358,No structural variation,23,23,23,23,32,32,1,1,1,1
+cohort1,HG01361,No structural variation,26,26,0,26,32,32,1,0,1,1
+cohort1,HG01891,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1,HG01928,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1,HG01952,No structural variation,28,28,0,28,32,32,1,0,1,1
+cohort1,HG01978,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1,HG02055,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1,HG02080,No structural variation,26,26,26,26,32,31,1,1,1,31/32
+cohort1,HG02109,No structural variation,21,21,21,21,32,0,1,1,1,0
+cohort1,HG02145,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1,HG02148,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1,HG02257,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1,HG02572,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1,HG02622,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1,HG02630,No structural variation,23,23,0,23,32,32,1,0,1,1
+cohort1,HG02717,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1,HG02723,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1,HG02818,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1,HG02886,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1,HG03098,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1,HG03453,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1,HG03486,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1,HG03492,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1,HG03516,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1,HG03540,Copy-number variation only,30,0,0,0,33,32,0,0,0,32/33
+cohort1,HG03579,No structural variation,22,22,22,22,32,32,1,1,1,1
+cohort1,NA18906,No structural variation,23,23,23,23,32,32,1,1,1,1
+cohort1,NA19240,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1,NA20129,Copy-number variation only,30,0,0,0,33,0,0,0,0,0
+cohort1,NA21309,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1,NA24385,No structural variation,22,22,22,22,32,32,1,1,1,1
+cohort1,NA24631,Hybrid,30,30,30,0,33,32,1,1,0,32/33
+cohort1_dragen,HG00438,Hybrid,30,28,28,28,33,0,14/15,14/15,14/15,0
+cohort1_dragen,HG00621,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1_dragen,HG00673,No structural variation,28,28,28,28,32,32,1,1,1,1
+cohort1_dragen,HG00733,Hybrid,30,28,28,28,33,33,14/15,14/15,14/15,1
+cohort1_dragen,HG00735,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1_dragen,HG00741,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1_dragen,HG01071,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1_dragen,HG01106,No structural variation,23,23,23,23,32,32,1,1,1,1
+cohort1_dragen,HG01109,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1_dragen,HG01175,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1_dragen,HG01243,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1_dragen,HG01258,Hybrid,30,30,30,30,33,0,1,1,1,0
+cohort1_dragen,HG01358,No structural variation,23,23,23,23,32,32,1,1,1,1
+cohort1_dragen,HG01361,No structural variation,26,26,0,26,32,32,1,0,1,1
+cohort1_dragen,HG01891,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1_dragen,HG01928,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1_dragen,HG01952,No structural variation,28,28,0,28,32,32,1,0,1,1
+cohort1_dragen,HG01978,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1_dragen,HG02055,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1_dragen,HG02080,No structural variation,26,26,26,26,32,30,1,1,1,15/16
+cohort1_dragen,HG02109,No structural variation,21,21,21,21,32,32,1,1,1,1
+cohort1_dragen,HG02145,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1_dragen,HG02148,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1_dragen,HG02257,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1_dragen,HG02572,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1_dragen,HG02622,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1_dragen,HG02630,No structural variation,23,23,0,23,32,32,1,0,1,1
+cohort1_dragen,HG02717,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1_dragen,HG02723,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1_dragen,HG02818,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1_dragen,HG02886,No structural variation,25,25,25,25,32,32,1,1,1,1
+cohort1_dragen,HG03098,No structural variation,29,29,29,29,32,32,1,1,1,1
+cohort1_dragen,HG03453,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1_dragen,HG03486,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1_dragen,HG03492,No structural variation,27,27,27,27,32,32,1,1,1,1
+cohort1_dragen,HG03516,No structural variation,24,24,24,24,32,32,1,1,1,1
+cohort1_dragen,HG03540,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1_dragen,HG03579,No structural variation,22,22,22,22,32,32,1,1,1,1
+cohort1_dragen,NA18906,No structural variation,23,23,23,23,32,32,1,1,1,1
+cohort1_dragen,NA19240,No structural variation,26,26,26,26,32,32,1,1,1,1
+cohort1_dragen,NA20129,Copy-number variation only,30,0,0,0,33,0,0,0,0,0
+cohort1_dragen,NA21309,Copy-number variation only,30,30,30,30,33,33,1,1,1,1
+cohort1_dragen,NA24385,No structural variation,22,22,22,22,32,32,1,1,1,1
+cohort1_dragen,NA24631,Hybrid,30,30,30,0,33,32,1,1,0,32/33
+cohort2,HG00099,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG00133,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2,HG00232,No structural variation,24,0,0,0,27,27,0,0,0,1
+cohort2,HG00253,No structural variation,21,21,21,21,27,27,1,1,1,1
+cohort2,HG00280,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2,HG00320,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG00350,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2,HG00408,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG00423,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG00544,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG00558,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG00597,Hybrid,30,0,0,0,28,0,0,0,0,0
+cohort2,HG00609,Hybrid,30,30,30,0,28,28,1,1,0,1
+cohort2,HG00639,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2,HG00658,Hybrid,30,30,30,30,28,0,1,1,1,0
+cohort2,HG01123,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2,HG01167,No structural variation,24,24,24,24,27,0,1,1,1,0
+cohort2,HG01192,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG01261,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG01496,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG01530,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2,HG01784,Hybrid,30,28,28,28,28,28,14/15,14/15,14/15,1
+cohort2,HG01884,No structural variation,20,20,20,20,27,27,1,1,1,1
+cohort2,HG01940,No structural variation,27,27,27,27,27,27,1,1,1,1
+cohort2,HG01969,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2,HG01975,No structural variation,28,28,28,28,27,27,1,1,1,1
+cohort2,HG02015,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02027,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02040,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02056,Hybrid,30,16,16,16,28,28,8/15,8/15,8/15,1
+cohort2,HG02071,Hybrid,30,30,30,30,28,0,1,1,1,0
+cohort2,HG02074,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02083,Hybrid,30,24,24,24,28,0,4/5,4/5,4/5,0
+cohort2,HG02129,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02132,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02135,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02155,Hybrid,30,30,30,30,28,0,1,1,1,0
+cohort2,HG02178,Hybrid,30,27,27,27,28,0,9/10,9/10,9/10,0
+cohort2,HG02258,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02300,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02486,No structural variation,23,23,23,23,27,27,1,1,1,1
+cohort2,HG02523,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02559,No structural variation,22,22,0,22,27,27,1,0,1,1
+cohort2,HG02602,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02647,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG02965,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG03017,No structural variation,22,22,22,22,27,27,1,1,1,1
+cohort2,HG03139,Copy-number variation only,30,30,30,30,28,0,1,1,1,0
+cohort2,HG03225,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG03239,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG03471,No structural variation,23,23,23,23,27,27,1,1,1,1
+cohort2,HG03654,No structural variation,23,23,23,23,27,27,1,1,1,1
+cohort2,HG03834,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,HG04184,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2,HG04228,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2,HG06807,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,NA18522,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2,NA18565,Hybrid,30,0,0,0,28,0,0,0,0,0
+cohort2,NA18747,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,NA18952,No structural variation,28,28,28,28,27,27,1,1,1,1
+cohort2,NA18974,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,NA18976,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,NA18983,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2,NA19043,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2,NA19087,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,NA19776,Hybrid,30,21,21,21,28,28,7/10,7/10,7/10,1
+cohort2,NA19909,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2,NA20282,No structural variation,28,28,28,28,27,27,1,1,1,1
+cohort2,NA20752,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2,NA20805,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2,NA20905,No structural variation,27,27,27,27,27,27,1,1,1,1
+cohort2,NA21102,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2_dragen,HG00099,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG00133,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2_dragen,HG00232,No structural variation,24,0,0,0,27,27,0,0,0,1
+cohort2_dragen,HG00253,No structural variation,21,21,21,21,27,27,1,1,1,1
+cohort2_dragen,HG00280,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2_dragen,HG00320,Copy-number variation only,30,26,26,26,28,28,13/15,13/15,13/15,1
+cohort2_dragen,HG00350,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2_dragen,HG00408,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG00423,Copy-number variation only,30,0,0,0,28,28,0,0,0,1
+cohort2_dragen,HG00544,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG00558,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG00597,Hybrid,30,0,0,0,28,0,0,0,0,0
+cohort2_dragen,HG00609,Hybrid,30,30,30,0,28,28,1,1,0,1
+cohort2_dragen,HG00639,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2_dragen,HG00658,Hybrid,30,30,30,30,28,0,1,1,1,0
+cohort2_dragen,HG01123,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2_dragen,HG01167,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2_dragen,HG01192,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG01261,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG01496,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG01530,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2_dragen,HG01784,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG01884,No structural variation,20,20,20,20,27,27,1,1,1,1
+cohort2_dragen,HG01940,No structural variation,27,27,27,27,27,27,1,1,1,1
+cohort2_dragen,HG01969,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2_dragen,HG01975,No structural variation,28,28,28,28,27,27,1,1,1,1
+cohort2_dragen,HG02015,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02027,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02040,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02056,Hybrid,30,18,18,18,28,28,3/5,3/5,3/5,1
+cohort2_dragen,HG02071,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02074,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02083,Hybrid,30,22,22,22,28,0,11/15,11/15,11/15,0
+cohort2_dragen,HG02129,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02132,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02135,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02155,Hybrid,30,30,30,30,28,0,1,1,1,0
+cohort2_dragen,HG02178,Hybrid,30,27,27,27,28,0,9/10,9/10,9/10,0
+cohort2_dragen,HG02258,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02300,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02486,No structural variation,23,23,23,23,27,27,1,1,1,1
+cohort2_dragen,HG02523,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02559,No structural variation,22,22,0,22,27,27,1,0,1,1
+cohort2_dragen,HG02602,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02647,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG02965,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG03017,No structural variation,22,22,22,22,27,27,1,1,1,1
+cohort2_dragen,HG03139,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG03225,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG03239,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG03471,No structural variation,23,23,23,23,27,27,1,1,1,1
+cohort2_dragen,HG03654,No structural variation,23,23,23,23,27,27,1,1,1,1
+cohort2_dragen,HG03834,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,HG04184,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2_dragen,HG04228,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2_dragen,HG06807,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,NA18522,No structural variation,24,24,24,24,27,27,1,1,1,1
+cohort2_dragen,NA18565,Hybrid,30,0,0,0,28,2,0,0,0,1/14
+cohort2_dragen,NA18747,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,NA18952,No structural variation,28,28,28,28,27,27,1,1,1,1
+cohort2_dragen,NA18974,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,NA18976,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,NA18983,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2_dragen,NA19043,No structural variation,25,25,25,25,27,27,1,1,1,1
+cohort2_dragen,NA19087,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,NA19776,Hybrid,30,21,21,21,28,28,7/10,7/10,7/10,1
+cohort2_dragen,NA19909,Copy-number variation only,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,NA20282,No structural variation,28,28,28,28,27,27,1,1,1,1
+cohort2_dragen,NA20752,No structural variation,26,26,26,26,27,27,1,1,1,1
+cohort2_dragen,NA20805,Hybrid,30,30,30,30,28,28,1,1,1,1
+cohort2_dragen,NA20905,No structural variation,27,27,27,27,27,27,1,1,1,1
+cohort2_dragen,NA21102,No structural variation,24,24,24,24,27,27,1,1,1,1

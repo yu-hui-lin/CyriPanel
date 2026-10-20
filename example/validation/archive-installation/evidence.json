@@ -1,0 +1,48 @@
+{
+  "archive": "cyripanel-example-data.tar.gz",
+  "archive_bytes": 2691360951,
+  "archive_members_verified": 24,
+  "archive_sha256": "194110431cc3244b533d151563ba1e62b2da71435d3bfc0a4a3d34b7581cacf6",
+  "complete_parsed_json_records_matched": 2,
+  "evidence_created_utc": "2026-10-19T13:12:33.329076+00:00",
+  "input_manifest": {
+    "path": "../input-SHA256SUMS",
+    "sha256": "2d86553156ae27aecf1a27bb32a183914e25accc5997cada515db9e426ce3750"
+  },
+  "notes": [
+    "The existing cyripanel-example Conda environment was reused; no fresh environment was installed.",
+    "The local archive was installed into a clean code copy; no GitHub or Zenodo download was tested.",
+    "Snapshot hashes were recorded before execution and rechecked at evidence capture.",
+    "snapshot-SHA256SUMS describes the historical tested copy; later documentation or ignore-rule edits may differ.",
+    "Archive installation and index checks are recorded by the completed job; BAMs were not rehashed at capture.",
+    "Outputs were re-compared at capture; MeanRatio comparison uses stored report precision.",
+    "This does not establish independent biological truth or full-cohort reproducibility."
+  ],
+  "observed_output_sha256": {
+    "cnv_reports/HG00639_CNV_exon_level_report.csv": "94a5cafc7d26142025729d76555ee390e9c203748498444559c6e1ee3ab72490",
+    "cnv_reports/HG02129_CNV_exon_level_report.csv": "88a1370cf5d60c169be74fc76a93505a39feef358c59f41a3bb3bdbf155f1c6d",
+    "cyripanel.json": "b63a774cf9c8305ceef986091298b877cf492e6136098b50af9e3f5640ea72f9",
+    "cyripanel.tsv": "8d699878b0b69686e79865645781583822c564a5e97ca4cd45f3f7b5cdf19bed"
+  },
+  "primary_metrics_matched": 10,
+  "runtime_manifest": {
+    "path": "../source-sha256.json",
+    "sha256": "9f3e8eda1ae5e9267c327f5b06349795bacd4779a98604f225676034ec4d8cd7"
+  },
+  "sample_roles": {
+    "HG00133": "reference",
+    "HG00280": "reference",
+    "HG00639": "test",
+    "HG01530": "reference",
+    "HG02129": "test",
+    "NA18522": "reference",
+    "NA19043": "reference"
+  },
+  "scheduler_stderr_empty": true,
+  "schema_version": 1,
+  "scope": "Clean code-copy archive installation and two-sample observed-output reproduction",
+  "snapshot_checksum_paths_relative_to": "../../..",
+  "snapshot_file_count": 126,
+  "source_job_id": "2267879",
+  "working_indexes_verified": 7
+}

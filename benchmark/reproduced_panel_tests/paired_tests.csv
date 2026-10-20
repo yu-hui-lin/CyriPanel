@@ -1,0 +1,33 @@
+min_evaluations,arm,test,panels,samples,informative_samples,statistic,p_raw,p_holm,median_difference_pp,method
+1,cohort1,Friedman,5/10/20,44,0,,,,,undefined: all tied
+1,cohort1,Wilcoxon,5/10,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+1,cohort1,Wilcoxon,5/20,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+1,cohort1,Wilcoxon,10/20,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+1,cohort2,Friedman,5/10/20,72,5,3.1111111111094942,0.21107208779126085,,,chi-square approximation
+1,cohort2,Wilcoxon,5/10,72,5,3.5,0.2785170238295782,0.8355510714887346,0.0,asymptotic; wilcox; no continuity correction
+1,cohort2,Wilcoxon,5/20,72,5,5.0,0.5001842570707944,1.0,0.0,asymptotic; wilcox; no continuity correction
+1,cohort2,Wilcoxon,10/20,72,3,3.0,1.0,1.0,0.0,asymptotic; wilcox; no continuity correction
+1,cohort1_dragen,Friedman,5/10/20,44,2,3.9999999999997002,0.13533528323663296,,,chi-square approximation
+1,cohort1_dragen,Wilcoxon,5/10,44,2,0.0,0.15729920705028502,0.4718976211508551,0.0,asymptotic; wilcox; no continuity correction
+1,cohort1_dragen,Wilcoxon,5/20,44,2,0.0,0.15729920705028502,0.4718976211508551,0.0,asymptotic; wilcox; no continuity correction
+1,cohort1_dragen,Wilcoxon,10/20,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+1,cohort2_dragen,Friedman,5/10/20,72,5,3.1111111111094942,0.21107208779126085,,,chi-square approximation
+1,cohort2_dragen,Wilcoxon,5/10,72,5,3.0,0.22491588401596185,0.6747476520478856,0.0,asymptotic; wilcox; no continuity correction
+1,cohort2_dragen,Wilcoxon,5/20,72,5,5.0,0.5001842570707944,1.0,0.0,asymptotic; wilcox; no continuity correction
+1,cohort2_dragen,Wilcoxon,10/20,72,3,3.0,1.0,1.0,0.0,asymptotic; wilcox; no continuity correction
+5,cohort1,Friedman,5/10/20,44,0,,,,,undefined: all tied
+5,cohort1,Wilcoxon,5/10,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+5,cohort1,Wilcoxon,5/20,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+5,cohort1,Wilcoxon,10/20,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+5,cohort2,Friedman,5/10/20,71,5,3.1111111111120446,0.21107208779099168,,,chi-square approximation
+5,cohort2,Wilcoxon,5/10,71,5,3.5,0.2785170238295782,0.8355510714887346,0.0,asymptotic; wilcox; no continuity correction
+5,cohort2,Wilcoxon,5/20,71,5,5.0,0.5001842570707944,1.0,0.0,asymptotic; wilcox; no continuity correction
+5,cohort2,Wilcoxon,10/20,71,3,3.0,1.0,1.0,0.0,asymptotic; wilcox; no continuity correction
+5,cohort1_dragen,Friedman,5/10/20,44,2,3.9999999999997002,0.13533528323663296,,,chi-square approximation
+5,cohort1_dragen,Wilcoxon,5/10,44,2,0.0,0.15729920705028502,0.4718976211508551,0.0,asymptotic; wilcox; no continuity correction
+5,cohort1_dragen,Wilcoxon,5/20,44,2,0.0,0.15729920705028502,0.4718976211508551,0.0,asymptotic; wilcox; no continuity correction
+5,cohort1_dragen,Wilcoxon,10/20,44,0,,1.0,1.0,0.0,all zero: p=1 convention
+5,cohort2_dragen,Friedman,5/10/20,71,5,3.1111111111120446,0.21107208779099168,,,chi-square approximation
+5,cohort2_dragen,Wilcoxon,5/10,71,5,3.0,0.22491588401596185,0.6747476520478856,0.0,asymptotic; wilcox; no continuity correction
+5,cohort2_dragen,Wilcoxon,5/20,71,5,5.0,0.5001842570707944,1.0,0.0,asymptotic; wilcox; no continuity correction
+5,cohort2_dragen,Wilcoxon,10/20,71,3,3.0,1.0,1.0,0.0,asymptotic; wilcox; no continuity correction

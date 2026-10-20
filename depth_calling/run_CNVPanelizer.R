@@ -29,12 +29,7 @@
 # This script implements reference-panel based CNV detection for targeted sequencing panels.
 # It replaces Cyrius's GMM approach with bootstrap-based statistical analysis of normalized read counts.
 
-# --- Personal library setup: Install packages to user's home directory to avoid permission issues on shared systems. ---
-personal_lib_path <- file.path(Sys.getenv("HOME"), "R", "library")
-if (!dir.exists(personal_lib_path)) {
-  dir.create(personal_lib_path, recursive = TRUE)
-}
-.libPaths(c(personal_lib_path, .libPaths()))
+# Use the R library paths supplied by the active environment.
 
 # --- Parse command-line arguments: sample BAM, BED file, reference BAM directory, output directory. ---
 args <- commandArgs(trailingOnly=TRUE)
@@ -55,17 +50,17 @@ outputReportFilename <- file.path(output_dir, paste0(BAM_BASENAME, "_CNV_exon_le
 # --- Main CNVPanelizer workflow with error handling. ---
 tryCatch({
   
-  # --- STEP 1: Install and load CNVPanelizer from Bioconductor ---
-  # BiocManager handles package dependencies automatically. 
-  if (!requireNamespace("BiocManager", quietly = TRUE)) {
-    install.packages("BiocManager", repos="https://cloud.r-project.org")
-  }
+  # --- STEP 1: Verify and load the installed CNVPanelizer ---
   if (!requireNamespace("CNVPanelizer", quietly = TRUE)) {
-    BiocManager::install("CNVPanelizer", version = "3.16", update = FALSE)
+    stop("CNVPanelizer is missing. Activate the cyripanel-example environment first.")
+  }
+  cnv_version <- as.character(utils::packageVersion("CNVPanelizer"))
+  if (cnv_version != "1.30.0") {
+    stop(paste("Expected CNVPanelizer 1.30.0; found", cnv_version))
   }
   suppressPackageStartupMessages(library(CNVPanelizer))
-  message("CNVPanelizer package loaded.")
-  
+  message("CNVPanelizer ", cnv_version, " loaded from: ", find.package("CNVPanelizer"))
+
   # --- STEP 2: Parse BED file to extract genomic ranges and gene names ---
   # ampliconColumnNumber=4: 4th column contains gene/amplicon names.
   # split parameter set to "THIS_SHOULD_NOT_SPLIT_ANYTHING" (a nonsense string) prevents unwanted name splitting.
@@ -79,7 +74,8 @@ tryCatch({
     bedFilepath,
     ampliconColumn = ampliconColumnNumber,
     split = "THIS_SHOULD_NOT_SPLIT_ANYTHING",  # A nonsense string to prevent unwanted name splitting.
-    doReduce = FALSE
+    doReduce = FALSE,
+    skip = 0
   )
   
   metadataFromGenomicRanges <- elementMetadata(genomicRangesFromBed)

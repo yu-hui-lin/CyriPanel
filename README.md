@@ -16,16 +16,41 @@ CYP2D6–CYP2D7 hybrid alleles, and reports a diplotype with a filter status.
 
 **GRCh38 only.**
 
+## Reproducibility example
+
+Start with the [worked example](example/README.md): five assay-matched diploid
+references and two test samples, with frozen observed outputs and verification
+records. Archive installation into a clean code copy was verified with the
+original Conda environment. A subsequent environment rebuilt from
+`environment.yml` reproduced both sample outputs using that restored copy.
+
+This checks reproduction of observed software outputs for two samples; it does
+not establish independent biological accuracy or reproduce the full benchmark.
+The example data archive's public download URL and data-source documentation
+are pending release. Use a checkout containing `example/`; the original
+`v1.0.1` tag predates this example.
+
 ---
 
 ## Requirements
 
-| | |
+### Tested example environment
+
+| Component | Version or requirement |
 |---|---|
-| Python | 3.6.8 (the validated interpreter). Install with `pip install -r requirements.txt`; the exact versions behind the published results are in `requirements-validated.txt` |
-| R | ≥ 4.2 with [CNVPanelizer](https://bioconductor.org/packages/CNVPanelizer/) (validated with v1.30.0, Bioconductor 3.16) |
-| Other | `samtools`; an aligner (see below) |
-| Input | Coordinate-sorted, duplicate-marked BAM/CRAM aligned to GRCh38 |
+| Platform | Linux x86_64; Conda and Bash |
+| Python | 3.10.22 |
+| R / CNVPanelizer | R 4.2.3 / CNVPanelizer 1.30.0 |
+| BAM tools | pysam 0.23.0; samtools 1.24; bedtools 2.31.1 |
+| Example input | GRCh38 panel-sliced BAMs with matching BAI indexes |
+
+These versions describe the new reproducibility example. The earlier Python
+dependency records in `requirements*.txt` are retained separately; they do not
+describe this example's environment. Full dependencies are recorded in the
+Conda files linked below.
+
+For other datasets, use coordinate-sorted, duplicate-marked alignments to GRCh38.
+CRAM input also requires the matching reference FASTA.
 
 ### Alignment matters more than usual
 
@@ -51,19 +76,47 @@ Duplicates should be marked but **not removed** — capture duplicates carry dep
 
 ## Installation
 
+From the root of a checkout containing `example/`, create a new environment on
+Linux x86_64 using the tested YAML installation workflow:
+
 ```bash
-git clone https://github.com/yu-hui-lin/CyriPanel.git
-cd CyriPanel
-
-# Python dependencies
-pip install -r requirements.txt
-
-# R dependency (pinned to the validated release)
-Rscript -e 'if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager", repos="https://cloud.r-project.org"); BiocManager::install("CNVPanelizer", version="3.16", update=FALSE)'
+bash setup_environment.sh cyripanel-example
+conda activate cyripanel-example
 ```
 
-`setup_environment.sh` automates the same steps into a conda environment and is convenient
-on an HPC where `module load miniconda3` is available.
+The setup script reads [environment.yml](environment.yml). If this environment
+already exists from the tested setup, activate it instead of creating it again.
+To choose a new name, use that name in both commands.
+
+The reconstruction test used the name `cyripanel-rebuild`. Its two-sample run
+matched all 10 primary comparisons and both complete parsed JSON records;
+see the [environment rebuild evidence](example/validation/environment-rebuild/evidence.json).
+It reused the previously restored code and data, with the existing package
+cache available.
+
+Dependency records:
+
+- [environment.example.yml](environment.example.yml): direct dependencies used
+  for the initial environment creation.
+- [Original explicit package list](reproducibility/conda-linux-64.explicit.txt):
+  package builds and URLs from the original environment.
+- [Rebuilt environment package list](example/validation/environment-rebuild/conda-linux-64.explicit.txt):
+  package builds and URLs recorded in the successful rebuild run.
+
+An optional alternative is to recreate the original recorded package builds
+directly from their explicit list. This alternative has not been separately
+tested; use a new environment name:
+
+```bash
+conda create --name cyripanel-explicit \
+  --file reproducibility/conda-linux-64.explicit.txt
+conda activate cyripanel-explicit
+```
+
+Continue with the [data installation and example run](example/README.md).
+The verified analysis entry point is `example/run_example.sh`.
+The general `run_cyripanel.sh` wrapper and site deployment scripts remain
+outside this example's verification.
 
 ---
 
@@ -200,143 +253,21 @@ publication; the evaluation framework will be deposited alongside it.
 
 ---
 
-## Deployment at NTUH
+## Running on an HPC cluster
 
-The clinical pharmacogenomics service at National Taiwan University Hospital runs CyriPanel
-on the NCHC cluster. `deployment/` holds the SLURM submission script used there; it
-hard-codes that site's account, partition and paths and is kept as a worked example.
+Run full data installation, BAM checksum verification, and analysis in an
+allocated compute job. Activate the Conda environment inside the job and follow
+the [example instructions](example/README.md) from the repository root.
+Use the account, partition, and resource allocation required by your cluster.
 
-<details>
-<summary>國網部署說明（中文）</summary>
+The general `deployment/submit_cyripanel.slurm` template inherits the Conda
+environment activated before submission. Supply your cluster's resource options
+to `sbatch`, followed by the script, an absolute repository path, and the
+arguments for `run_cyripanel.sh`. Its default scheduler logs are written in the
+submission directory. This template is separate from the verified example.
 
-###  國網位址 (Location)
-
-```bash
-/staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/CyriPanel
-```
-
-### 快速開始 (Quick Start)
-
-### 0. 放置 5-20 個已知為 diploid、無 CNV/SV 的檢體至
-```bash
-/staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel/ref_dir
-```
-
--  **！！！ BAM 檔需由 Illumina Dragen 作為 aligner 生成 ！！！**
-- 須為與待檢檢體相同 wet lab 流程產出
-- 每個 BAM 檔需有對應的 .bai 索引檔
-
-預設為 NA21102, HG01940, HG00639, HG00350, HG00232 五個檢體
-
-### 1. 啟動環境
-
-```bash
-# 載入miniconda
-module load biology
-module load miniconda3
-
-# 載入並啟動 CyriPanel 環境
-cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
-source activate_cyripanel.sh
-```
-
-### 2. 驗證安裝 (Validation Test)
-
-執行測試樣本 HG02129 以確認安裝正確：
-
-```bash
-cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
-bash run_test_HG02129.sh
-```
-
-預期結果：
-
-```bash
-[INFO] Called Genotype: *1/*36+*10
-[INFO] Filter Status: PASS
-[INFO] Expected Genotype: *1/*36+*10
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║   ✓ TEST PASSED - EXACT MATCH                               ║
-║                                                              ║
-║   CyriPanel is correctly installed and configured!          ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
-```
-
-### 3. 建立 .manifest 
-
-假設要分析 /sample_directory 資料夾內所有 .bam
-
-```bash
-# 自動列出所有 BAM 檔案
-cd /staging/reserve/paylong_ntu/Clinical/__Clinical_pipeline/PG_pipeline/software/CyriPanel
-ls /sample_directory/*.bam > manifests/my_samples.manifest
-
-# 檢查內容
-cat manifests/my_samples.manifest
-```
-
-### 4. 執行批次分析 
-
-##### 方式 A：直接在登入節點執行（小量批次樣本）
-
-```bash
-bash run_cyripanel.sh --manifest manifests/my_samples.manifest batch_name
-```
-
-batch_name: 就是一個輸出檔案的前綴名稱，你可以自己取名，例如：PG_batch20260129
-輸出檔案會變成：results/PG_batch20260129_cyp2d6.tsv
-
-##### 方式 B：提交 SLURM 工作 (把工作提交到計算節點，不會佔用登入節點資源)
-
-```bash
-sbatch deployment/submit_cyripanel.slurm manifests/my_samples.manifest batch_name
-```
-
-batch_name: 就是一個輸出檔案的前綴名稱，你可以自己取名，例如：PG_batch20260129
-輸出檔案會變成：results/PG_batch20260129_cyp2d6.tsv
-
-### 輸出檔案 (Output Files)
-
-| 檔案              | 說明                             |
-| --------------- | ------------------------------ |
-| `{prefix}.tsv`  | 簡化結果（Sample, Genotype, Filter） |
-| `{prefix}.json` | 完整結果（包含 CNV 資訊、變異位點等）          |
-
-### TSV 輸出範例
-
-```
-Sample      Genotype        Filter
-HG02129     *1/*10+*36      PASS
-HG00436     *2/*41          PASS
-```
-
-### 目錄結構 (Directory Structure)
-
-```
-CyriPanel/
-├── star_caller.py           # 主程式
-├── run_cyripanel.sh         # 執行腳本
-├── run_test_HG02129.sh      # 測試腳本
-├── activate_cyripanel.sh    # 環境啟動腳本
-├── deployment/              # SLURM 提交腳本（NTUH 部署用）
-├── caller/                  # Star allele 分析模組
-├── depth_calling/           # CNV 分析模組
-├── data/                    # 參考資料檔
-├── ref_dir/                 # CNVPanelizer 參考樣本 (5-20 個 diploid BAM，預設 5 個)
-├── manifests/               # .manifest files
-├── test_data/               # 測試樣本
-├── results/                 # 輸出結果
-└── logs/                    # 日誌檔案
-```
-
----
-Copyright © Yu-Hui Lin (林育慧) yhlin.md05@nycu.edu.tw
-Github: https://github.com/yu-hui-lin/CyriPanel
-*CyriPanel is licensed under GPL-3.0. See LICENSE file for details.*
-
-</details>
+Scripts under `benchmark/slurm/` retain site-specific configuration and need
+separate updates before external use.
 
 ---
 
@@ -354,6 +285,8 @@ CyriPanel builds on:
   applications. Bioconductor.
 
 ## License
+
+Copyright © Yu-Hui Lin (林育慧).
 
 GNU General Public License v3.0, inherited from Cyrius. See `LICENSE`.
 

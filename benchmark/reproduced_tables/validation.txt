@@ -1,0 +1,11 @@
+Input source commit: 5d33b820dd2ba8b874f1bbea51f411b5f081856f
+Expected manuscript file SHA256: fe094417392cab03c3021c557e41ae5e9a8c41889f72d5135bfc833a2eafe42b
+Analysis script SHA256: 8f51f22ad5b397bb62c92424784dd4ea8e7a86e5a31cae4f5d61261fc62a0d04
+Python: 3.10.22
+Six input file checksums matched; 360 CyriPanel iterations checked.
+16680 CyriPanel records re-scored; 6814 Aldy retained major calls re-scored.
+Tables 3, 4 and 5 match all 42 manuscript display rows.
+No-calls remain in denominators; samples have equal weight in Table 3.
+Table 5 SD uses sample SD (n-1); discordance includes no-calls.
+Scope: descriptive evaluation-table reconstruction, not caller execution,
+raw Aldy solution-file verification, depth-matrix recovery or inferential testing.

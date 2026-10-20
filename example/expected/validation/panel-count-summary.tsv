@@ -1,0 +1,8 @@
+sample_id	role	regions	mismatches	max_abs_difference
+NA18522	reference	784	0	0
+HG00280	reference	784	0	0
+HG00133	reference	784	0	0
+NA19043	reference	784	0	0
+HG01530	reference	784	0	0
+HG00639	test	784	0	0
+HG02129	test	784	0	0
