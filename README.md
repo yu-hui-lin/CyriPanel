@@ -29,7 +29,7 @@ original Conda environment. A subsequent environment rebuilt from
 These checks assess whether the observed software outputs can be reproduced for
 two samples. They do not establish independent biological accuracy or reproduce
 the full benchmark.
-The example data sources and CC BY 4.0 license are documented in the [example README](example/README.md#data-source). The public download link will be added after the dataset is published on Zenodo. Use a checkout containing `example/`. The original `v1.0.1` tag predates this example.
+The example data sources and CC BY 4.0 license are documented in the [example README](example/README.md#data-source). The example data archive is available at https://doi.org/10.6084/m9.figshare.34724976.v1. Use a checkout containing `example/`. The original `v1.0.1` tag predates this example.
 
 ---
 
@@ -332,7 +332,7 @@ separate updates before external use.
 
 ## Citation
 
-Manuscript and software-release citation details will be added when available.
+Please cite the software through its Zenodo concept DOI, https://doi.org/10.5281/zenodo.22673250, which always resolves to the latest release. The raw reads of the benchmark are in the European Nucleotide Archive under PRJEB128569, and the example data are at https://doi.org/10.6084/m9.figshare.34724976.v1. Manuscript citation details will be added when available.
 
 CyriPanel builds on:
 
