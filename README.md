@@ -28,9 +28,7 @@ original Conda environment. A subsequent environment rebuilt from
 
 This checks reproduction of observed software outputs for two samples; it does
 not establish independent biological accuracy or reproduce the full benchmark.
-The example data archive's public download URL and data-source documentation
-are pending release. Use a checkout containing `example/`; the original
-`v1.0.1` tag predates this example.
+The example data sources and CC BY 4.0 license are documented in the [example README](example/README.md#data-source). The public download link will be added after the dataset is published on Zenodo. Use a checkout containing `example/`. The original `v1.0.1` tag predates this example.
 
 ---
 
