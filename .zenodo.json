@@ -23,6 +23,16 @@
       "relation": "isDerivedFrom",
       "resource_type": "software"
     },
+        {
+      "identifier": "https://www.ebi.ac.uk/ena/browser/view/PRJEB128569",
+      "relation": "references",
+      "resource_type": "dataset"
+    },
+    {
+      "identifier": "10.6084/m9.figshare.34724976.v1",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset"
+    },
     {
       "identifier": "https://gitlab.com/andreassh/bcyrius",
       "relation": "isDerivedFrom",
