@@ -183,7 +183,7 @@ or use the wrapper, which creates `results/` and handles logging:
 bash run_cyripanel.sh --manifest manifests/my_batch.manifest my_batch
 ```
 
-For CRAM input, add `-r /path/to/GRCh38.fa`.
+For CRAM input, run `star_caller.py` directly and provide the reference FASTA with `-r /path/to/GRCh38.fa`.
 
 ### Output
 
