@@ -172,5 +172,4 @@ as historical material. Some contain original site paths and resource settings;
 they are not prerequisites for these three reconstruction entry points. Adapting
 them for a new full-BAM benchmark requires separate configuration and validation.
 Use the table mapping above for the current manuscript, rather than older script
-names or table numbering. `v1.0.1` remains the source of the pinned input CSVs;
-new software/data release identifiers must be recorded when those releases are published.
+names or table numbering. `v1.0.1` remains the source of the pinned input CSVs. The raw reads for all 116 cell lines are in the European Nucleotide Archive under PRJEB128569. New software release identifiers must be recorded when those releases are published.
