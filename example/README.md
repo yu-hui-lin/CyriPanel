@@ -2,11 +2,11 @@
 
 This example runs CyriPanel with five assay-matched diploid references and two test samples, then compares the results with frozen observed outputs.
 
-**Release status:** The data archive has been built and tested locally. The public download link will be added after the dataset is published on Zenodo. Use a checkout containing this example/ directory and the matching archive. The original v1.0.1 tag predates this example.
+**Release status:** The data archive is available at https://doi.org/10.6084/m9.figshare.34724976.v1. Use a checkout containing this example/ directory and the matching archive. The original v1.0.1 tag predates this example.
 
 ## Data source
 
-The seven example BAMs were prepared from targeted-capture sequencing data generated for the CyriPanel study using genomic DNA purchased from the [Coriell Institute for Medical Research](https://www.coriell.org/). All seven samples belong to study cohort 2 and are represented in [HPRC Release 2](https://humanpangenome.org/hprc-data-release-2/). Sample identifiers and their reference or test roles are listed in [manifest.tsv](manifest.tsv).
+The seven example BAMs were prepared from targeted-capture sequencing data generated for the CyriPanel study using genomic DNA purchased from the [Coriell Institute for Medical Research](https://www.coriell.org/). All seven samples belong to study cohort 2 and are represented in [HPRC Release 2](https://humanpangenome.org/hprc-data-release-2/). Sample identifiers and their reference or test roles are listed in [manifest.tsv](manifest.tsv). The raw reads for these samples are in the European Nucleotide Archive under study PRJEB128569, as runs ERR18060456 (NA18522), ERR18060366 (HG00280), ERR18060363 (HG00133), ERR18060464 (NA19043), ERR18060396 (HG01530), ERR18060377 (HG00639) and ERR18060416 (HG02129).
 
 Reads were aligned to GRCh38 using ALT-aware BWA-MEM, and duplicates were marked with Picard. The example BAMs retain capture-panel targets and their mates to preserve the inputs used for panel-wide normalization. HPRC haplotype-resolved assemblies were used to derive the study's reference-standard diplotypes.
 
@@ -55,7 +55,7 @@ The [original explicit package list](../reproducibility/conda-linux-64.explicit.
 
 ## Install the data archive
 
-Public download: **pending release**. Once available, obtain the archive matching these metadata:
+Public download: https://doi.org/10.6084/m9.figshare.34724976.v1. Obtain the archive matching these metadata:
 
 - Filename: `cyripanel-example-data.tar.gz`
 - Size: **2,691,360,951 bytes** (approximately 2.507 GiB)
