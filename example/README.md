@@ -2,7 +2,21 @@
 
 This example runs CyriPanel with five assay-matched diploid references and two test samples, then compares the results with frozen observed outputs.
 
-**Release status:** the data archive has been built and tested locally. Its public download URL, data-source citation, and redistribution statement must be completed before release. The instructions below require a checkout containing this `example/` directory and the matching archive; the original `v1.0.1` tag predates this example.
+**Release status:** The data archive has been built and tested locally. The public download link will be added after the dataset is published on Zenodo. Use a checkout containing this example/ directory and the matching archive. The original v1.0.1 tag predates this example.
+
+## Data source
+
+The seven example BAMs were prepared from targeted-capture sequencing data generated for the CyriPanel study using genomic DNA purchased from the [Coriell Institute for Medical Research](https://www.coriell.org/). All seven samples belong to study cohort 2 and are represented in [HPRC Release 2](https://humanpangenome.org/hprc-data-release-2/). Sample identifiers and their reference or test roles are listed in [manifest.tsv](manifest.tsv).
+
+Reads were aligned to GRCh38 using ALT-aware BWA-MEM, and duplicates were marked with Picard. The example BAMs retain capture-panel targets and their mates to preserve the inputs used for panel-wide normalization. HPRC haplotype-resolved assemblies were used to derive the study's reference-standard diplotypes.
+
+## Data license
+
+The study-generated BAM files and accompanying indexes, cleaned headers, and metadata in `cyripanel-example-data.tar.gz` are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+These data may be reused, modified, and redistributed for any purpose, including commercial use. Users must credit the dataset creators, include a link to the license, and identify any changes they make.
+
+The CyriPanel software is separately licensed under the GNU General Public License, version 3 or later, as described in [LICENSE](../LICENSE).
 
 ## Data and expected results
 
